@@ -6,8 +6,28 @@
 	objectVersion = 110;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		032C6E7D30AA968A00776640 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 032C6E7C30AA968A00776640 /* ComposableArchitecture */; };
+		032C6ECB30AAA32A00776640 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 032C6ECA30AAA32A00776640 /* Lottie */; };
+		032C6ED130AAA41700776640 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 032C6ED030AAA41700776640 /* Kingfisher */; };
+		032C6ED430AAA46800776640 /* SwiftFormat in Frameworks */ = {isa = PBXBuildFile; productRef = 032C6ED330AAA46800776640 /* SwiftFormat */; };
+		032C6ED630AAA50000776640 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 032C6ED530AAA50000776640 /* Supabase */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		032C6F9530AAAB0000776640 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 032C6E6530AA94F300776640 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 032C6E6C30AA94F300776640;
+			remoteInfo = dailymate;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		032C6E6D30AA94F300776640 /* dailymate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dailymate.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		032C6E7E30AA968A00776640 /* .xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = .xcconfig; path = dailymate/Resources/Config/.xcconfig; sourceTree = "<group>"; };
+		032C6F9030AAAB0000776640 /* dailymateTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dailymateTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -16,10 +36,25 @@
 			path = dailymate;
 			sourceTree = "<group>";
 		};
+		032C6F9130AAAB0000776640 /* dailymateTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = dailymateTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		032C6E6A30AA94F300776640 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+				032C6ED130AAA41700776640 /* Kingfisher in Frameworks */,
+				032C6E7D30AA968A00776640 /* ComposableArchitecture in Frameworks */,
+				032C6ECB30AAA32A00776640 /* Lottie in Frameworks */,
+				032C6ED430AAA46800776640 /* SwiftFormat in Frameworks */,
+				032C6ED630AAA50000776640 /* Supabase in Frameworks */,
+			);
+		};
+		032C6F9330AAAB0000776640 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
 			);
@@ -31,7 +66,9 @@
 			isa = PBXGroup;
 			children = (
 				032C6E6F30AA94F300776640 /* dailymate */,
+				032C6F9130AAAB0000776640 /* dailymateTests */,
 				032C6E6E30AA94F300776640 /* Products */,
+				032C6F8430AAAA2F00776640 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -39,8 +76,17 @@
 			isa = PBXGroup;
 			children = (
 				032C6E6D30AA94F300776640 /* dailymate.app */,
+				032C6F9030AAAB0000776640 /* dailymateTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		032C6F8430AAAA2F00776640 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				032C6E7E30AA968A00776640 /* .xcconfig */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -60,9 +106,37 @@
 				032C6E6F30AA94F300776640 /* dailymate */,
 			);
 			name = dailymate;
+			packageProductDependencies = (
+				032C6E7C30AA968A00776640 /* ComposableArchitecture */,
+				032C6ECA30AAA32A00776640 /* Lottie */,
+				032C6ED030AAA41700776640 /* Kingfisher */,
+				032C6ED330AAA46800776640 /* SwiftFormat */,
+				032C6ED530AAA50000776640 /* Supabase */,
+			);
 			productName = dailymate;
 			productReference = 032C6E6D30AA94F300776640 /* dailymate.app */;
 			productType = "com.apple.product-type.application";
+		};
+		032C6F9730AAAB0000776640 /* dailymateTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 032C6F9A30AAAB0000776640 /* Build configuration list for PBXNativeTarget "dailymateTests" */;
+			buildPhases = (
+				032C6F9230AAAB0000776640 /* Sources */,
+				032C6F9330AAAB0000776640 /* Frameworks */,
+				032C6F9430AAAB0000776640 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				032C6F9630AAAB0000776640 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				032C6F9130AAAB0000776640 /* dailymateTests */,
+			);
+			name = dailymateTests;
+			productName = dailymateTests;
+			productReference = 032C6F9030AAAB0000776640 /* dailymateTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -71,11 +145,18 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
+				KnownAssetTags = (
+					New,
+				);
 				LastSwiftUpdateCheck = 2700;
 				LastUpgradeCheck = 2700;
 				TargetAttributes = {
 					032C6E6C30AA94F300776640 = {
 						CreatedOnToolsVersion = 27.0;
+					};
+					032C6F9730AAAB0000776640 = {
+						CreatedOnToolsVersion = 27.0;
+						TestTargetID = 032C6E6C30AA94F300776640;
 					};
 				};
 			};
@@ -88,18 +169,31 @@
 			);
 			mainGroup = 032C6E6430AA94F300776640;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				032C6E7B30AA968A00776640 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				032C6E7E30AA96A000776640 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+				032C6EC930AAA32A00776640 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				032C6ECF30AAA41700776640 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				032C6ED230AAA46800776640 /* XCRemoteSwiftPackageReference "swiftformat" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 032C6E6E30AA94F300776640 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				032C6E6C30AA94F300776640 /* dailymate */,
+				032C6F9730AAAB0000776640 /* dailymateTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		032C6E6B30AA94F300776640 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		032C6F9430AAAB0000776640 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
 			);
@@ -112,11 +206,25 @@
 			files = (
 			);
 		};
+		032C6F9230AAAB0000776640 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		032C6F9630AAAB0000776640 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 032C6E6C30AA94F300776640 /* dailymate */;
+			targetProxy = 032C6F9530AAAB0000776640 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		032C6E7630AA94F300776640 /* Debug configuration for PBXProject "dailymate" */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 032C6E7E30AA968A00776640 /* .xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -180,6 +288,7 @@
 		};
 		032C6E7730AA94F300776640 /* Release configuration for PBXProject "dailymate" */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 032C6E7E30AA968A00776640 /* .xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -243,6 +352,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_DAILYMATE_BACKENDED_URL = "$(DAILYMATE_BACKENDED_URL)";
+				INFOPLIST_KEY_SUPABASE_PUBLISHABLE_KEY = "$(SUPABASE_PUBLISHABLE_KEY)";
+				INFOPLIST_KEY_SUPABASE_URL = "$(SUPABASE_URL)";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -257,7 +369,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
@@ -274,6 +385,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_DAILYMATE_BACKENDED_URL = "$(DAILYMATE_BACKENDED_URL)";
+				INFOPLIST_KEY_SUPABASE_PUBLISHABLE_KEY = "$(SUPABASE_PUBLISHABLE_KEY)";
+				INFOPLIST_KEY_SUPABASE_URL = "$(SUPABASE_URL)";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -288,11 +402,50 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		032C6F9830AAAB0000776640 /* Debug configuration for PBXNativeTarget "dailymateTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = manhletapcode.dailymate.app.dailymateTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/dailymate.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/dailymate";
+			};
+			name = Debug;
+		};
+		032C6F9930AAAB0000776640 /* Release configuration for PBXNativeTarget "dailymateTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = manhletapcode.dailymate.app.dailymateTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/dailymate.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/dailymate";
 			};
 			name = Release;
 		};
@@ -315,7 +468,86 @@
 			);
 			defaultConfigurationName = Release;
 		};
+		032C6F9A30AAAB0000776640 /* Build configuration list for PBXNativeTarget "dailymateTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				032C6F9830AAAB0000776640 /* Debug configuration for PBXNativeTarget "dailymateTests" */,
+				032C6F9930AAAB0000776640 /* Release configuration for PBXNativeTarget "dailymateTests" */,
+			);
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		032C6E7B30AA968A00776640 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.26.2;
+			};
+		};
+		032C6E7E30AA96A000776640 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase/supabase-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.1;
+			};
+		};
+		032C6EC930AAA32A00776640 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.6.1;
+			};
+		};
+		032C6ECF30AAA41700776640 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.16.0;
+			};
+		};
+		032C6ED230AAA46800776640 /* XCRemoteSwiftPackageReference "swiftformat" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nicklockwood/swiftformat";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.64.7;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		032C6E7C30AA968A00776640 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 032C6E7B30AA968A00776640 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+		032C6ECA30AAA32A00776640 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 032C6EC930AAA32A00776640 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+		032C6ED030AAA41700776640 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 032C6ECF30AAA41700776640 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		032C6ED330AAA46800776640 /* SwiftFormat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 032C6ED230AAA46800776640 /* XCRemoteSwiftPackageReference "swiftformat" */;
+			productName = SwiftFormat;
+		};
+		032C6ED530AAA50000776640 /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 032C6E7E30AA96A000776640 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 032C6E6530AA94F300776640 /* Project object */;
 	validationLevel = 1;

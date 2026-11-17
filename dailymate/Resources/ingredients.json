@@ -1,0 +1,2842 @@
+{
+  "version": "1.0",
+  "exported_at": "2026-11-15T04:58:17.777601+00:00",
+  "count": 405,
+  "data": [
+    {
+      "id": 7,
+      "name": "măng",
+      "name_en": "bamboo shoots",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 9,
+      "name": "cà chua",
+      "name_en": "tomato",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 16,
+      "name": "hành lá",
+      "name_en": "green onion",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 21,
+      "name": "rau răm",
+      "name_en": "vietnamese coriander",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 24,
+      "name": "ớt",
+      "name_en": "chili pepper",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 25,
+      "name": "bông cải",
+      "name_en": "broccoli",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 26,
+      "name": "nấm mèo",
+      "name_en": "wood ear mushroom",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 28,
+      "name": "dứa",
+      "name_en": "pineapple",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 29,
+      "name": "tỏi",
+      "name_en": "garlic",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 31,
+      "name": "sả",
+      "name_en": "lemongrass",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 39,
+      "name": "gừng",
+      "name_en": "ginger",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 41,
+      "name": "cua",
+      "name_en": "crab",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 52,
+      "name": "đậu que",
+      "name_en": "green beans",
+      "category": "Đậu & Hạt",
+      "parent_id": null
+    },
+    {
+      "id": 62,
+      "name": "sườn heo",
+      "name_en": "pork ribs",
+      "category": "Thịt",
+      "parent_id": 149
+    },
+    {
+      "id": 63,
+      "name": "đậu đen",
+      "name_en": "black beans",
+      "category": "Đậu & Hạt",
+      "parent_id": null
+    },
+    {
+      "id": 65,
+      "name": "rau má",
+      "name_en": "pennywort",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 67,
+      "name": "chanh",
+      "name_en": "lime",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 71,
+      "name": "đậu hũ",
+      "name_en": "tofu",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 78,
+      "name": "bắp ngọt",
+      "name_en": "sweet corn",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 80,
+      "name": "tai heo",
+      "name_en": "pork ear",
+      "category": "Thịt",
+      "parent_id": 149
+    },
+    {
+      "id": 81,
+      "name": "cà rốt",
+      "name_en": "carrot",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 82,
+      "name": "cóc",
+      "name_en": "ambarella fruit",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 83,
+      "name": "hành tím",
+      "name_en": "shallot",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 102,
+      "name": "rau ngò rí",
+      "name_en": "coriander leaves",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 109,
+      "name": "táo",
+      "name_en": "apple",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 110,
+      "name": "hạt óc chó",
+      "name_en": "walnut",
+      "category": "Đậu & Hạt",
+      "parent_id": null
+    },
+    {
+      "id": 120,
+      "name": "bột tỏi",
+      "name_en": "garlic powder",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 133,
+      "name": "nạm bò",
+      "name_en": "beef brisket",
+      "category": "Thịt",
+      "parent_id": 142
+    },
+    {
+      "id": 136,
+      "name": "cải thìa",
+      "name_en": "bok choy",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 139,
+      "name": "bạc hà",
+      "name_en": "mint",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 142,
+      "name": "thịt bò",
+      "name_en": "beef",
+      "category": "Thịt",
+      "parent_id": null
+    },
+    {
+      "id": 149,
+      "name": "thịt heo",
+      "name_en": "pork",
+      "category": "Thịt",
+      "parent_id": null
+    },
+    {
+      "id": 150,
+      "name": "lá lốt",
+      "name_en": "betel leaves",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 151,
+      "name": "nấm",
+      "name_en": "mushroom",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 164,
+      "name": "cải bó xôi",
+      "name_en": "spinach",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 166,
+      "name": "hành tây",
+      "name_en": "onion",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 191,
+      "name": "su su",
+      "name_en": "chayote",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 195,
+      "name": "bầu",
+      "name_en": "bottle gourd",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 202,
+      "name": "hoa chuối",
+      "name_en": "banana blossom",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 203,
+      "name": "xoài",
+      "name_en": "mango",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 206,
+      "name": "đậu phộng",
+      "name_en": "peanut",
+      "category": "Đậu & Hạt",
+      "parent_id": null
+    },
+    {
+      "id": 215,
+      "name": "khoai tây",
+      "name_en": "potato",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 216,
+      "name": "hộp đậu trắng",
+      "name_en": "canned white beans",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 224,
+      "name": "cá hú",
+      "name_en": "pangasius fish",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 225,
+      "name": "dấm",
+      "name_en": "vinegar",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 232,
+      "name": "đuôi heo",
+      "name_en": "pork tail",
+      "category": "Thịt",
+      "parent_id": 149
+    },
+    {
+      "id": 233,
+      "name": "củ cải",
+      "name_en": "radish",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 245,
+      "name": "dưa leo",
+      "name_en": "cucumber",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 273,
+      "name": "giò heo",
+      "name_en": "pork hock",
+      "category": "Thịt",
+      "parent_id": 149
+    },
+    {
+      "id": 285,
+      "name": "nước dừa",
+      "name_en": "coconut water",
+      "category": "Đồ uống",
+      "parent_id": null
+    },
+    {
+      "id": 286,
+      "name": "củ hũ dừa",
+      "name_en": "coconut core",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 289,
+      "name": "rau muống",
+      "name_en": "water spinach",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 309,
+      "name": "bí đỏ",
+      "name_en": "pumpkin",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 312,
+      "name": "kim chi",
+      "name_en": "kimchi",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 315,
+      "name": "sườn bò",
+      "name_en": "beef ribs",
+      "category": "Thịt",
+      "parent_id": 142
+    },
+    {
+      "id": 324,
+      "name": "su hào",
+      "name_en": "kohlrabi",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 350,
+      "name": "thì là",
+      "name_en": "dill",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 351,
+      "name": "đậu hà lan",
+      "name_en": "peas",
+      "category": "Đậu & Hạt",
+      "parent_id": null
+    },
+    {
+      "id": 353,
+      "name": "cần tây",
+      "name_en": "celery",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 354,
+      "name": "nấm rơm",
+      "name_en": "straw mushroom",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 355,
+      "name": "hạt điều",
+      "name_en": "cashew",
+      "category": "Đậu & Hạt",
+      "parent_id": null
+    },
+    {
+      "id": 357,
+      "name": "tôm",
+      "name_en": "shrimp",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 360,
+      "name": "đậu xanh",
+      "name_en": "mung beans",
+      "category": "Đậu & Hạt",
+      "parent_id": null
+    },
+    {
+      "id": 366,
+      "name": "mướp",
+      "name_en": "luffa",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 371,
+      "name": "giá",
+      "name_en": "bean sprouts",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 383,
+      "name": "nghêu",
+      "name_en": "clam",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 384,
+      "name": "cá bông lau",
+      "name_en": "pangasius fish",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 387,
+      "name": "cải xoăn",
+      "name_en": "kale",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 389,
+      "name": "bún",
+      "name_en": "rice vermicelli",
+      "category": "Ngũ cốc & Tinh bột",
+      "parent_id": null
+    },
+    {
+      "id": 395,
+      "name": "dầu ô liu",
+      "name_en": "olive oil",
+      "category": "Dầu & Mỡ",
+      "parent_id": null
+    },
+    {
+      "id": 397,
+      "name": "bacon",
+      "name_en": "bacon",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 421,
+      "name": "mơ",
+      "name_en": "apricot",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 422,
+      "name": "ớt hiểm",
+      "name_en": "bird chili",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 457,
+      "name": "ớt chuông",
+      "name_en": "bell pepper",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 458,
+      "name": "cánh gà",
+      "name_en": "chicken wings",
+      "category": "Thịt",
+      "parent_id": 3044
+    },
+    {
+      "id": 465,
+      "name": "nước mắm",
+      "name_en": "fish sauce",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 499,
+      "name": "cam",
+      "name_en": "orange",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 513,
+      "name": "trứng cá",
+      "name_en": "fish roe",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 531,
+      "name": "dừa",
+      "name_en": "coconut",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 554,
+      "name": "tép",
+      "name_en": "small shrimp",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 564,
+      "name": "đùi gà",
+      "name_en": "chicken drumstick",
+      "category": "Thịt",
+      "parent_id": 3044
+    },
+    {
+      "id": 573,
+      "name": "cá thu",
+      "name_en": "mackerel",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 580,
+      "name": "nạc heo",
+      "name_en": "lean pork",
+      "category": "Thịt",
+      "parent_id": 149
+    },
+    {
+      "id": 583,
+      "name": "lưỡi heo",
+      "name_en": "pork tongue",
+      "category": "Thịt",
+      "parent_id": 149
+    },
+    {
+      "id": 587,
+      "name": "bột nghệ",
+      "name_en": "turmeric powder",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 591,
+      "name": "bông bí",
+      "name_en": "pumpkin flower",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 596,
+      "name": "ếch",
+      "name_en": "frog",
+      "category": "Thịt",
+      "parent_id": null
+    },
+    {
+      "id": 600,
+      "name": "củ cải đỏ",
+      "name_en": "red radish",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 601,
+      "name": "củ dền",
+      "name_en": "beetroot",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 611,
+      "name": "cá lóc",
+      "name_en": "snakehead fish",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 612,
+      "name": "gạo",
+      "name_en": "rice",
+      "category": "Ngũ cốc & Tinh bột",
+      "parent_id": null
+    },
+    {
+      "id": 630,
+      "name": "cá trê",
+      "name_en": "catfish",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 631,
+      "name": "cá hố",
+      "name_en": "hairtail fish",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 640,
+      "name": "lá me",
+      "name_en": "tamarind leaves",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 641,
+      "name": "hàu",
+      "name_en": "oyster",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 651,
+      "name": "cải cúc",
+      "name_en": "garland chrysanthemum",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 691,
+      "name": "húng láng",
+      "name_en": "spearmint",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 692,
+      "name": "kinh giới",
+      "name_en": "vietnamese balm",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 730,
+      "name": "cơm",
+      "name_en": "cooked rice",
+      "category": "Ngũ cốc & Tinh bột",
+      "parent_id": null
+    },
+    {
+      "id": 731,
+      "name": "hộp cá ngừ",
+      "name_en": "canned tuna",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 766,
+      "name": "bơ",
+      "name_en": "butter",
+      "category": "Sữa & Trứng",
+      "parent_id": null
+    },
+    {
+      "id": 783,
+      "name": "củ sen",
+      "name_en": "lotus root",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 791,
+      "name": "cá cơm",
+      "name_en": "anchovy",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 799,
+      "name": "đậu rồng",
+      "name_en": "winged beans",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 820,
+      "name": "rau mè",
+      "name_en": "perilla leaves",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 822,
+      "name": "rau xà lách",
+      "name_en": "lettuce",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 837,
+      "name": "bánh tráng",
+      "name_en": "rice paper",
+      "category": "Ngũ cốc & Tinh bột",
+      "parent_id": null
+    },
+    {
+      "id": 840,
+      "name": "trứng vịt",
+      "name_en": "duck egg",
+      "category": "Sữa & Trứng",
+      "parent_id": null
+    },
+    {
+      "id": 843,
+      "name": "mồng tơi",
+      "name_en": "malabar spinach",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 851,
+      "name": "miso",
+      "name_en": "miso",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 856,
+      "name": "nui",
+      "name_en": "pasta",
+      "category": "Ngũ cốc & Tinh bột",
+      "parent_id": null
+    },
+    {
+      "id": 859,
+      "name": "cá rô phi",
+      "name_en": "tilapia",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 865,
+      "name": "nấm kim châm",
+      "name_en": "enoki mushroom",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 878,
+      "name": "bạch tuộc",
+      "name_en": "octopus",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 887,
+      "name": "tía tô",
+      "name_en": "perilla leaves",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 888,
+      "name": "cá nục",
+      "name_en": "mackerel",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 910,
+      "name": "bí xanh",
+      "name_en": "winter melon",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 934,
+      "name": "cá đối",
+      "name_en": "mullet",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 948,
+      "name": "cá ba sa",
+      "name_en": "pangasius fish",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 956,
+      "name": "đậu bắp",
+      "name_en": "okra",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 985,
+      "name": "nấm bào ngư",
+      "name_en": "oyster mushroom",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 996,
+      "name": "cá chạch",
+      "name_en": "loach",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 1006,
+      "name": "mật mía",
+      "name_en": "molasses",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 1020,
+      "name": "cá diêu hồng",
+      "name_en": "tilapia",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 1037,
+      "name": "sắn",
+      "name_en": "cassava",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 1038,
+      "name": "cải đỏ",
+      "name_en": "red mustard greens",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 1041,
+      "name": "cá ngừ",
+      "name_en": "tuna",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 1050,
+      "name": "me",
+      "name_en": "tamarind",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 1062,
+      "name": "cá bống",
+      "name_en": "goby fish",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 1069,
+      "name": "cá hồng",
+      "name_en": "snapper",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 1071,
+      "name": "rong biển",
+      "name_en": "seaweed",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 1089,
+      "name": "cá bạc má",
+      "name_en": "mackerel",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 1091,
+      "name": "riềng",
+      "name_en": "galangal",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 1098,
+      "name": "bánh mì",
+      "name_en": "bread",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 1099,
+      "name": "cá kèo",
+      "name_en": "goby fish",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 1100,
+      "name": "bột mì",
+      "name_en": "wheat flour",
+      "category": "Ngũ cốc & Tinh bột",
+      "parent_id": null
+    },
+    {
+      "id": 1107,
+      "name": "cá duội",
+      "name_en": "hairtail fish",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 1117,
+      "name": "chuối",
+      "name_en": "banana",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 1145,
+      "name": "bột xù",
+      "name_en": "breadcrumbs",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 1150,
+      "name": "táo tàu",
+      "name_en": "jujube",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 1153,
+      "name": "nước hầm gà",
+      "name_en": "chicken broth",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 1157,
+      "name": "bông điên điển",
+      "name_en": "sesbania flower",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 1162,
+      "name": "lòng heo",
+      "name_en": "pork offal",
+      "category": "Thịt",
+      "parent_id": 149
+    },
+    {
+      "id": 1184,
+      "name": "gạo nếp",
+      "name_en": "glutinous rice",
+      "category": "Ngũ cốc & Tinh bột",
+      "parent_id": null
+    },
+    {
+      "id": 1186,
+      "name": "tempeh",
+      "name_en": "tempeh",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 1192,
+      "name": "gân bò",
+      "name_en": "beef tendon",
+      "category": "Thịt",
+      "parent_id": 142
+    },
+    {
+      "id": 1206,
+      "name": "sa kê",
+      "name_en": "breadfruit",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 1207,
+      "name": "bột ngô",
+      "name_en": "cornstarch",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 1211,
+      "name": "miến",
+      "name_en": "glass noodles (Southern: bún tàu)",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 1228,
+      "name": "cá rô",
+      "name_en": "perch",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 1263,
+      "name": "rau đay",
+      "name_en": "jute leaves",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 1303,
+      "name": "dầu vừng",
+      "name_en": "sesame oil",
+      "category": "Dầu & Mỡ",
+      "parent_id": null
+    },
+    {
+      "id": 1322,
+      "name": "Tỏi tây (Hành Boaro)",
+      "name_en": "leek",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 1330,
+      "name": "nấm hương",
+      "name_en": "shiitake mushroom",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 1334,
+      "name": "dưa hấu",
+      "name_en": "watermelon",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 1361,
+      "name": "sò",
+      "name_en": "clam",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 1382,
+      "name": "ngó sen",
+      "name_en": "lotus stem",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 1406,
+      "name": "bột gạo",
+      "name_en": "rice flour",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 1408,
+      "name": "bì heo",
+      "name_en": "pork skin",
+      "category": "Thịt",
+      "parent_id": 149
+    },
+    {
+      "id": 1411,
+      "name": "tắc",
+      "name_en": "kumquat",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 1419,
+      "name": "cải bẹ xanh",
+      "name_en": "mustard greens",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 1425,
+      "name": "lê",
+      "name_en": "pear",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 1430,
+      "name": "cá mòi",
+      "name_en": "sardine",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 1464,
+      "name": "cá trắm",
+      "name_en": "grass carp",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 1467,
+      "name": "rau mầm",
+      "name_en": "microgreens",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 1469,
+      "name": "lá nori",
+      "name_en": "nori",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 1470,
+      "name": "đậu đỏ",
+      "name_en": "red beans",
+      "category": "Đậu & Hạt",
+      "parent_id": null
+    },
+    {
+      "id": 1482,
+      "name": "óc heo",
+      "name_en": "pork brain",
+      "category": "Thịt",
+      "parent_id": 149
+    },
+    {
+      "id": 1498,
+      "name": "chân gà",
+      "name_en": "chicken feet",
+      "category": "Thịt",
+      "parent_id": 3044
+    },
+    {
+      "id": 1499,
+      "name": "huyết heo",
+      "name_en": "pork blood",
+      "category": "Thịt",
+      "parent_id": 149
+    },
+    {
+      "id": 1501,
+      "name": "măng tây",
+      "name_en": "asparagus",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 1502,
+      "name": "nấm tuyết",
+      "name_en": "snow fungus",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 1517,
+      "name": "rau thơm",
+      "name_en": "herbs",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 1518,
+      "name": "ức gà",
+      "name_en": "chicken breast",
+      "category": "Thịt",
+      "parent_id": 3044
+    },
+    {
+      "id": 1526,
+      "name": "cá lăng",
+      "name_en": "catfish",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 1535,
+      "name": "sữa chua",
+      "name_en": "yogurt",
+      "category": "Sữa & Trứng",
+      "parent_id": null
+    },
+    {
+      "id": 1548,
+      "name": "vani",
+      "name_en": "vanilla",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 1556,
+      "name": "đậu trắng",
+      "name_en": "white beans",
+      "category": "Đậu & Hạt",
+      "parent_id": null
+    },
+    {
+      "id": 1563,
+      "name": "khế",
+      "name_en": "starfruit",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 1577,
+      "name": "hoa thiên lý",
+      "name_en": "tonkin jasmine flower",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 1585,
+      "name": "bột nếp",
+      "name_en": "glutinous rice flour",
+      "category": "Ngũ cốc & Tinh bột",
+      "parent_id": null
+    },
+    {
+      "id": 1604,
+      "name": "ngải cứu",
+      "name_en": "mugwort",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 1610,
+      "name": "bột cumin",
+      "name_en": "cumin powder",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 1624,
+      "name": "thịt ngan",
+      "name_en": "duck meat",
+      "category": "Thịt",
+      "parent_id": null
+    },
+    {
+      "id": 1639,
+      "name": "rau dền",
+      "name_en": "amaranth greens",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 1642,
+      "name": "cải thảo",
+      "name_en": "napa cabbage",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 1656,
+      "name": "sữa đậu nành",
+      "name_en": "soy milk",
+      "category": "Đồ uống",
+      "parent_id": null
+    },
+    {
+      "id": 1679,
+      "name": "ốc",
+      "name_en": "snail",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 1735,
+      "name": "trám",
+      "name_en": "canarium fruit",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 1737,
+      "name": "lát",
+      "name_en": "galangal",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 1747,
+      "name": "Mè (Vừng)",
+      "name_en": "sesame seeds",
+      "category": "Đậu & Hạt",
+      "parent_id": null
+    },
+    {
+      "id": 1780,
+      "name": "chanh dây",
+      "name_en": "passion fruit",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 1782,
+      "name": "mạch nha",
+      "name_en": "malt syrup",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 1791,
+      "name": "ghẹ",
+      "name_en": "blue crab",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 1795,
+      "name": "mì",
+      "name_en": "noodles",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 1817,
+      "name": "cải rổ",
+      "name_en": "leaf mustard",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 1843,
+      "name": "lá mơ",
+      "name_en": "stinky vine leaves",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 1881,
+      "name": "bánh phở",
+      "name_en": "pho noodles",
+      "category": "Ngũ cốc & Tinh bột",
+      "parent_id": null
+    },
+    {
+      "id": 1888,
+      "name": "rau om",
+      "name_en": "rice paddy herb",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 1889,
+      "name": "bánh phồng tôm",
+      "name_en": "shrimp crackers",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 1968,
+      "name": "hành tăm (củ nén)",
+      "name_en": "shallot",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 2057,
+      "name": "vỏ hoành thánh",
+      "name_en": "wonton wrapper",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 2089,
+      "name": "cà pháo",
+      "name_en": "thai eggplant",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 2213,
+      "name": "men",
+      "name_en": "yeast",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 2246,
+      "name": "sữa",
+      "name_en": "milk",
+      "category": "Sữa & Trứng",
+      "parent_id": null
+    },
+    {
+      "id": 2255,
+      "name": "hủ tiếu",
+      "name_en": "hu tieu noodles",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 2285,
+      "name": "thăn heo",
+      "name_en": "pork tenderloin",
+      "category": "Thịt",
+      "parent_id": 149
+    },
+    {
+      "id": 2286,
+      "name": "lá cách",
+      "name_en": "melientha leaves",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 2304,
+      "name": "đậu đũa",
+      "name_en": "yardlong beans",
+      "category": "Đậu & Hạt",
+      "parent_id": null
+    },
+    {
+      "id": 2316,
+      "name": "gạo lứt",
+      "name_en": "brown rice",
+      "category": "Ngũ cốc & Tinh bột",
+      "parent_id": null
+    },
+    {
+      "id": 2339,
+      "name": "ô liu",
+      "name_en": "olive",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 2354,
+      "name": "cá tra",
+      "name_en": "pangasius",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 2387,
+      "name": "đường",
+      "name_en": "sugar",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 2407,
+      "name": "ổi",
+      "name_en": "guava",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 2438,
+      "name": "dọc mùng",
+      "name_en": "taro stem",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 2472,
+      "name": "yến mạch",
+      "name_en": "oats",
+      "category": "Ngũ cốc & Tinh bột",
+      "parent_id": null
+    },
+    {
+      "id": 2487,
+      "name": "cà tím",
+      "name_en": "eggplant",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 2571,
+      "name": "khoai lang",
+      "name_en": "sweet potato",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 2586,
+      "name": "cật heo",
+      "name_en": "pork kidney",
+      "category": "Thịt",
+      "parent_id": 149
+    },
+    {
+      "id": 2611,
+      "name": "mì somen",
+      "name_en": "somen noodles",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 2638,
+      "name": "thăn bò",
+      "name_en": "beef tenderloin",
+      "category": "Thịt",
+      "parent_id": 142
+    },
+    {
+      "id": 2661,
+      "name": "cải ngọt",
+      "name_en": "choy sum",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 2682,
+      "name": "rau lang",
+      "name_en": "sweet potato leaves",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 2724,
+      "name": "ngưu bàng",
+      "name_en": "burdock root",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 2754,
+      "name": "cá he",
+      "name_en": "carp",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 2768,
+      "name": "cải brussels",
+      "name_en": "brussels sprouts",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 2831,
+      "name": "tảo xoắn",
+      "name_en": "spirulina",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 2862,
+      "name": "mướp đắng",
+      "name_en": "bitter melon",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 2890,
+      "name": "nội tạng gà",
+      "name_en": "chicken offal",
+      "category": "Thịt",
+      "parent_id": 3044
+    },
+    {
+      "id": 2985,
+      "name": "ngò gai",
+      "name_en": "culantro",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 3020,
+      "name": "cải diếp",
+      "name_en": "lettuce",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 3024,
+      "name": "bột ngò",
+      "name_en": "coriander powder",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 3044,
+      "name": "thịt gà",
+      "name_en": "chicken",
+      "category": "Thịt",
+      "parent_id": null
+    },
+    {
+      "id": 3093,
+      "name": "ớt sừng",
+      "name_en": "red chili",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 3096,
+      "name": "cá đù",
+      "name_en": "drum fish",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 3104,
+      "name": "cá hói",
+      "name_en": "tilapia",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 3111,
+      "name": "ớt xanh",
+      "name_en": "green chili",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 3265,
+      "name": "hẹ",
+      "name_en": "chives",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 3288,
+      "name": "tim heo",
+      "name_en": "pork heart",
+      "category": "Thịt",
+      "parent_id": 149
+    },
+    {
+      "id": 3421,
+      "name": "cải xoong",
+      "name_en": "watercress",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 3552,
+      "name": "đậu gà",
+      "name_en": "chickpeas",
+      "category": "Đậu & Hạt",
+      "parent_id": null
+    },
+    {
+      "id": 3578,
+      "name": "cải cầu vồng",
+      "name_en": "rainbow chard",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 3608,
+      "name": "đu đủ",
+      "name_en": "papaya",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 3635,
+      "name": "bí ngòi",
+      "name_en": "zucchini",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 3662,
+      "name": "nước chanh",
+      "name_en": "lemon juice",
+      "category": "Đồ uống",
+      "parent_id": null
+    },
+    {
+      "id": 3672,
+      "name": "cá diếc",
+      "name_en": "crucian carp",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 3694,
+      "name": "hến",
+      "name_en": "clam",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 3735,
+      "name": "bánh mì sandwich",
+      "name_en": "sandwich bread",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 3738,
+      "name": "ketchup",
+      "name_en": "ketchup",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 3755,
+      "name": "chà là",
+      "name_en": "date fruit",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 3779,
+      "name": "lá ngải tía",
+      "name_en": "perilla leaves",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 3789,
+      "name": "cải dún",
+      "name_en": "leaf mustard",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 3878,
+      "name": "thịt vịt",
+      "name_en": "duck",
+      "category": "Thịt",
+      "parent_id": null
+    },
+    {
+      "id": 3925,
+      "name": "mayonnaise",
+      "name_en": "mayonnaise",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 3983,
+      "name": "bột gừng",
+      "name_en": "ginger powder",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 4039,
+      "name": "chùm ngây",
+      "name_en": "moringa leaves",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 4117,
+      "name": "cá đao",
+      "name_en": "hairtail fish",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 4313,
+      "name": "đậu que vàng",
+      "name_en": "yellow beans",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 4315,
+      "name": "dầu hạt nho",
+      "name_en": "grapeseed oil",
+      "category": "Dầu & Mỡ",
+      "parent_id": null
+    },
+    {
+      "id": 4370,
+      "name": "lá bắp cải",
+      "name_en": "cabbage leaves",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 4417,
+      "name": "thịt nguội",
+      "name_en": "ham",
+      "category": "Thịt",
+      "parent_id": null
+    },
+    {
+      "id": 4452,
+      "name": "thịt trâu",
+      "name_en": "water buffalo",
+      "category": "Thịt",
+      "parent_id": null
+    },
+    {
+      "id": 4485,
+      "name": "mực",
+      "name_en": "squid",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 4491,
+      "name": "cá chốt",
+      "name_en": "catfish",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 4516,
+      "name": "tôm sú",
+      "name_en": "shrimp",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 4548,
+      "name": "bồ công anh",
+      "name_en": "dandelion",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 4619,
+      "name": "dâu tây",
+      "name_en": "strawberry",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 4690,
+      "name": "cá chép",
+      "name_en": "carp",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 4823,
+      "name": "cá dứa",
+      "name_en": "pangasius",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 4870,
+      "name": "mùi tây",
+      "name_en": "parsley",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 4876,
+      "name": "bít tết",
+      "name_en": "beef steak",
+      "category": "Thịt",
+      "parent_id": 142
+    },
+    {
+      "id": 4917,
+      "name": "bắp cải",
+      "name_en": "cabbage",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 4936,
+      "name": "cá cam",
+      "name_en": "amberjack",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 4945,
+      "name": "cá trôi",
+      "name_en": "carp",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 4978,
+      "name": "baking soda",
+      "name_en": "baking soda",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 4999,
+      "name": "vả",
+      "name_en": "fig",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 5049,
+      "name": "rau dớn",
+      "name_en": "fern shoots",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 5146,
+      "name": "cải",
+      "name_en": "mustard greens",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 5191,
+      "name": "trà xanh",
+      "name_en": "green tea",
+      "category": "Đồ uống",
+      "parent_id": null
+    },
+    {
+      "id": 5307,
+      "name": "lá hương thảo",
+      "name_en": "rosemary",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 5413,
+      "name": "rạm",
+      "name_en": "crab",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 5468,
+      "name": "cọ",
+      "name_en": "palm fruit",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 5492,
+      "name": "đậu ngự",
+      "name_en": "lima beans",
+      "category": "Đậu & Hạt",
+      "parent_id": null
+    },
+    {
+      "id": 5525,
+      "name": "lá mì",
+      "name_en": "cassava leaves",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 5625,
+      "name": "sen",
+      "name_en": "lotus",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 5715,
+      "name": "mỡ",
+      "name_en": "lard",
+      "category": "Dầu & Mỡ",
+      "parent_id": null
+    },
+    {
+      "id": 5809,
+      "name": "cải non",
+      "name_en": "baby mustard greens",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 5842,
+      "name": "củ nghệ",
+      "name_en": "turmeric root",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 5932,
+      "name": "trứng cút",
+      "name_en": "quail eggs",
+      "category": "Sữa & Trứng",
+      "parent_id": null
+    },
+    {
+      "id": 6001,
+      "name": "bao tử heo",
+      "name_en": "pork stomach",
+      "category": "Thịt",
+      "parent_id": 149
+    },
+    {
+      "id": 6051,
+      "name": "rau bí",
+      "name_en": "pumpkin leaves",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 6084,
+      "name": "cá lạc",
+      "name_en": "fish",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 6101,
+      "name": "nước",
+      "name_en": "water",
+      "category": "Đồ uống",
+      "parent_id": null
+    },
+    {
+      "id": 6202,
+      "name": "mầm cải",
+      "name_en": "mustard sprouts",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 6211,
+      "name": "gan lợn",
+      "name_en": "pork liver",
+      "category": "Thịt",
+      "parent_id": 149
+    },
+    {
+      "id": 6353,
+      "name": "cá chình",
+      "name_en": "eel",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 6512,
+      "name": "ngó khoai",
+      "name_en": "taro stems",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 6517,
+      "name": "má heo",
+      "name_en": "pork jowl",
+      "category": "Thịt",
+      "parent_id": 149
+    },
+    {
+      "id": 6801,
+      "name": "tương ớt",
+      "name_en": "chili sauce",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 6954,
+      "name": "rau rocket",
+      "name_en": "arugula",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 7069,
+      "name": "nước cốt chanh",
+      "name_en": "lime juice",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 7178,
+      "name": "bột yến mạch",
+      "name_en": "oat flour",
+      "category": "Ngũ cốc & Tinh bột",
+      "parent_id": null
+    },
+    {
+      "id": 7186,
+      "name": "bông cải trắng",
+      "name_en": "cauliflower",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 7230,
+      "name": "cá saba",
+      "name_en": "mackerel",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 7283,
+      "name": "khoai từ",
+      "name_en": "yam",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 7288,
+      "name": "Cá bơn (Halibut)",
+      "name_en": "halibut",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 7498,
+      "name": "mỳ trứng",
+      "name_en": "egg noodles",
+      "category": "Ngũ cốc & Tinh bột",
+      "parent_id": null
+    },
+    {
+      "id": 7531,
+      "name": "patê",
+      "name_en": "pate",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 7565,
+      "name": "kem whipping",
+      "name_en": "whipping cream",
+      "category": "Sữa & Trứng",
+      "parent_id": null
+    },
+    {
+      "id": 7566,
+      "name": "rau basil",
+      "name_en": "basil",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 7581,
+      "name": "thịt bê",
+      "name_en": "veal",
+      "category": "Thịt",
+      "parent_id": 142
+    },
+    {
+      "id": 7671,
+      "name": "thịt xay",
+      "name_en": "meat filling",
+      "category": "Thịt",
+      "parent_id": 149
+    },
+    {
+      "id": 7682,
+      "name": "rau cải ngồng",
+      "name_en": "choy sum",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 7720,
+      "name": "rượu",
+      "name_en": "cooking wine",
+      "category": "Đồ uống",
+      "parent_id": null
+    },
+    {
+      "id": 7722,
+      "name": "bắp bò",
+      "name_en": "beef shank",
+      "category": "Thịt",
+      "parent_id": 142
+    },
+    {
+      "id": 7753,
+      "name": "khoai môn",
+      "name_en": "taro",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 7858,
+      "name": "trái cherry",
+      "name_en": "cherry",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 7953,
+      "name": "sứa",
+      "name_en": "jellyfish",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 7988,
+      "name": "rau tàu bay",
+      "name_en": "herb",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 8055,
+      "name": "bột ớt",
+      "name_en": "chili powder",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 8147,
+      "name": "chao",
+      "name_en": "fermented tofu",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 8161,
+      "name": "dầu hào",
+      "name_en": "oyster sauce",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 8180,
+      "name": "đậu nành",
+      "name_en": "soybeans",
+      "category": "Đậu & Hạt",
+      "parent_id": null
+    },
+    {
+      "id": 8236,
+      "name": "nạc thăn",
+      "name_en": "pork tenderloin",
+      "category": "Thịt",
+      "parent_id": 149
+    },
+    {
+      "id": 8251,
+      "name": "quả việt quất",
+      "name_en": "blueberry",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 8408,
+      "name": "lon bia",
+      "name_en": "beer",
+      "category": "Đồ uống",
+      "parent_id": null
+    },
+    {
+      "id": 8485,
+      "name": "khoai mỡ",
+      "name_en": "purple yam",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 8581,
+      "name": "giá hẹ",
+      "name_en": "bean sprouts",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 8646,
+      "name": "hạt kê",
+      "name_en": "millet",
+      "category": "Ngũ cốc & Tinh bột",
+      "parent_id": null
+    },
+    {
+      "id": 8686,
+      "name": "maggi",
+      "name_en": "seasoning sauce",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 8790,
+      "name": "cá mú",
+      "name_en": "grouper",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 8868,
+      "name": "củ đậu",
+      "name_en": "jicama",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 8961,
+      "name": "cá minh thái",
+      "name_en": "white fish fillet",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 9054,
+      "name": "hoa cúc",
+      "name_en": "chrysanthemum",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 9067,
+      "name": "bưởi",
+      "name_en": "pomelo",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 9089,
+      "name": "hành tía tô",
+      "name_en": "perilla",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 9112,
+      "name": "diếp cừu",
+      "name_en": "lamb's lettuce",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 9170,
+      "name": "quýt",
+      "name_en": "mandarin",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 9410,
+      "name": "mì spaghetti",
+      "name_en": "spaghetti",
+      "category": "Ngũ cốc & Tinh bột",
+      "parent_id": null
+    },
+    {
+      "id": 9465,
+      "name": "cá đồng",
+      "name_en": "fish",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 9745,
+      "name": "quinoa",
+      "name_en": "quinoa",
+      "category": "Ngũ cốc & Tinh bột",
+      "parent_id": null
+    },
+    {
+      "id": 9784,
+      "name": "thịt đùi",
+      "name_en": "chicken thigh",
+      "category": "Thịt",
+      "parent_id": 3044
+    },
+    {
+      "id": 9795,
+      "name": "cá trích",
+      "name_en": "herring",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 9859,
+      "name": "lươn",
+      "name_en": "eel",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 9944,
+      "name": "vẹm",
+      "name_en": "mussels",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 9957,
+      "name": "cá vược",
+      "name_en": "sea bass",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 9974,
+      "name": "cá mối",
+      "name_en": "fish",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 9993,
+      "name": "mít",
+      "name_en": "jackfruit",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 10187,
+      "name": "rau cải đắng",
+      "name_en": "bitter greens",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 10209,
+      "name": "cốt lết",
+      "name_en": "pork chop",
+      "category": "Thịt",
+      "parent_id": 149
+    },
+    {
+      "id": 10299,
+      "name": "xốt cà chua",
+      "name_en": "tomato sauce",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 10717,
+      "name": "lá theme",
+      "name_en": "thyme",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 10775,
+      "name": "hoa hẹ",
+      "name_en": "garlic chives",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 10815,
+      "name": "sữa dừa",
+      "name_en": "coconut milk",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 11001,
+      "name": "cá sủ",
+      "name_en": "croaker",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 11009,
+      "name": "cá sòng",
+      "name_en": "horse mackerel",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 11012,
+      "name": "bí ngòi vàng",
+      "name_en": "yellow zucchini",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 11028,
+      "name": "đậu mắc ngọc",
+      "name_en": "navy beans",
+      "category": "Đậu & Hạt",
+      "parent_id": null
+    },
+    {
+      "id": 11029,
+      "name": "đậu tây",
+      "name_en": "kidney beans",
+      "category": "Đậu & Hạt",
+      "parent_id": null
+    },
+    {
+      "id": 11032,
+      "name": "hạt bí",
+      "name_en": "pumpkin seeds",
+      "category": "Đậu & Hạt",
+      "parent_id": null
+    },
+    {
+      "id": 11063,
+      "name": "thịt nạc dăm",
+      "name_en": "pork shoulder",
+      "category": "Thịt",
+      "parent_id": 149
+    },
+    {
+      "id": 11064,
+      "name": "cá phèn",
+      "name_en": "goatfish",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 11065,
+      "name": "bông so đũa",
+      "name_en": "sesbania grandiflora flower",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 11095,
+      "name": "trái lựu",
+      "name_en": "pomegranate",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 11127,
+      "name": "hạt lanh",
+      "name_en": "flaxseeds",
+      "category": "Đậu & Hạt",
+      "parent_id": null
+    },
+    {
+      "id": 11241,
+      "name": "Phô mai Mozzarella",
+      "name_en": "mozzarella",
+      "category": "Sữa & Trứng",
+      "parent_id": null
+    },
+    {
+      "id": 11253,
+      "name": "tôm thẻ loại to",
+      "name_en": "shrimp",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 11289,
+      "name": "Thịt ba chỉ",
+      "name_en": "pork belly",
+      "category": "Thịt",
+      "parent_id": 149
+    },
+    {
+      "id": 11609,
+      "name": "xúc xích",
+      "name_en": "sausage",
+      "category": "Thịt",
+      "parent_id": null
+    },
+    {
+      "id": 11781,
+      "name": "bột nở",
+      "name_en": "baking powder",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 11827,
+      "name": "dầu ăn",
+      "name_en": "Vegetable Oil",
+      "category": "Dầu & Mỡ",
+      "parent_id": null
+    },
+    {
+      "id": 11828,
+      "name": "nước tương",
+      "name_en": "Soy sauce",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 11829,
+      "name": "quế",
+      "name_en": "Cinnamon",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 11830,
+      "name": "dầu bơ",
+      "name_en": "Avocado oil",
+      "category": "Dầu & Mỡ",
+      "parent_id": null
+    },
+    {
+      "id": 11832,
+      "name": "bột hành",
+      "name_en": "Onion powder",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 11835,
+      "name": "rau ngót",
+      "name_en": "sweet leaf bush",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 11836,
+      "name": "rau sam",
+      "name_en": "purslane",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 11837,
+      "name": "Quả sấu",
+      "name_en": "Indochina Dragonplum",
+      "category": "Trái cây",
+      "parent_id": null
+    },
+    {
+      "id": 11843,
+      "name": "Con ruốc",
+      "name_en": "Acetes / Krill",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 11846,
+      "name": "Củ niễng",
+      "name_en": "Manchurian wild rice stem",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 11850,
+      "name": "Rau rút",
+      "name_en": "Water mimosa",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 11862,
+      "name": "Trứng gà",
+      "name_en": "Chicken Egg",
+      "category": "Sữa & Trứng",
+      "parent_id": null
+    },
+    {
+      "id": 11880,
+      "name": "Cá cơm muối ngâm dầu",
+      "name_en": "Anchovies in oil",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 11883,
+      "name": "Bột năng",
+      "name_en": "Tapioca starch",
+      "category": "Ngũ cốc & Tinh bột",
+      "parent_id": null
+    },
+    {
+      "id": 11884,
+      "name": "Bắp non",
+      "name_en": "Baby corn",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 11888,
+      "name": "bột cà ri",
+      "name_en": "Curry powder",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 11891,
+      "name": "Hành",
+      "name_en": "Scallion",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 11896,
+      "name": "Sườn non",
+      "name_en": "Pork spare ribs",
+      "category": "Thịt",
+      "parent_id": 149
+    },
+    {
+      "id": 11898,
+      "name": "Mì Soba",
+      "name_en": "Soba noodles",
+      "category": "Ngũ cốc & Tinh bột",
+      "parent_id": null
+    },
+    {
+      "id": 11900,
+      "name": "mật ong",
+      "name_en": "Honey",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 11907,
+      "name": "Tôm khô",
+      "name_en": "Dried shrimp",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 11910,
+      "name": "hạt tiêu",
+      "name_en": "Black pepper",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 11914,
+      "name": "Bông cải xanh baby",
+      "name_en": "Broccolini",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 11919,
+      "name": "tương bần",
+      "name_en": "Ban soybean sauce",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 11920,
+      "name": "cá mặn",
+      "name_en": "Salted cod",
+      "category": "Đã chế biến",
+      "parent_id": null
+    },
+    {
+      "id": 11923,
+      "name": "Trùng trục",
+      "name_en": "Freshwater mussel",
+      "category": "Hải sản",
+      "parent_id": null
+    },
+    {
+      "id": 11934,
+      "name": "Thịt băm",
+      "name_en": "Minced pork",
+      "category": "Thịt",
+      "parent_id": 149
+    },
+    {
+      "id": 11938,
+      "name": "Đậu hũ trắng",
+      "name_en": "Firm tofu",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 11939,
+      "name": "Đậu hũ non",
+      "name_en": "Silken tofu",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 11941,
+      "name": "ớt khô",
+      "name_en": "Dried chili",
+      "category": "Gia vị",
+      "parent_id": null
+    },
+    {
+      "id": 11942,
+      "name": "đậu que dẹp",
+      "name_en": "Flat beans",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 11946,
+      "name": "dưa cải muối",
+      "name_en": "Pickled mustard greens",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 11967,
+      "name": "nấm mỡ",
+      "name_en": "button mushroom",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 11969,
+      "name": "nấm mũ",
+      "name_en": "cremini mushroom",
+      "category": "Rau củ",
+      "parent_id": null
+    },
+    {
+      "id": 12002,
+      "name": "mắm tôm",
+      "name_en": "shrimp paste",
+      "category": "Gia vị",
+      "parent_id": null
+    }
+  ]
+}

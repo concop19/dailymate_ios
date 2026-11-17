@@ -1,0 +1,6 @@
+// Secrets.xcconfig
+// Secrets.xcconfig
+SUPABASE_URL = https:/$()/cluqexxdclgtybmryati.supabase.co
+SUPABASE_PUBLISHABLE_KEY = sb_publishable_-aTPg2_IrpWstYEIiMAWeg_3gbTRxmG
+DAILYMATE_BACKENDED_URL = https:/$()/daily-mate-server.onrender.com
+
