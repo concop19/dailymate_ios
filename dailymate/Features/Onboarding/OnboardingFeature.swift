@@ -11,15 +11,15 @@ import Foundation
 /// Container điều phối 5 stage Onboarding.
 /// - Stage 1 là root của NavigationStack, Stage 2...5 được push vào `path` (StackState).
 /// - Tiến trình hero: `currentStage = path.count + 1`.
-/// - Mỗi khi `draft` thay đổi sẽ tự lưu xuống `LocalClient`.
+/// - Mỗi khi `draft` thay đổi sẽ tự lưu xuống `LocalClient`; khi hoàn tất Stage 5 sẽ xoá bản nháp.
 @Reducer
 struct OnboardingFeature {
   @Reducer
   enum Path {
     case stage2(Stage2RegionFeature)
-    case stage3(OnboardingPlaceholderStageFeature)
-    case stage4(OnboardingPlaceholderStageFeature)
-    case stage5(OnboardingPlaceholderStageFeature)
+    case stage3(Stage3DietAllergyFeature)
+    case stage4(Stage4FlashcardsFeature)
+    case stage5(Stage5TasteSummaryFeature)
   }
 
   @ObservableState
@@ -31,9 +31,16 @@ struct OnboardingFeature {
     var draft: OnboardingDraft
     var stage1: Stage1PersonalFeature.State
     var path = StackState<Path.State>()
+    var isCompleted = false
 
     var currentStage: Int { path.count + 1 }
     var canGoBack: Bool { !path.isEmpty }
+
+    /// Phụ đề thanh Hero (vd: `"Thẻ 1/8"` khi đang ở Stage 4).
+    var heroDetail: String? {
+      guard case let .stage4(stage4State) = path.last else { return nil }
+      return stage4State.progressDetail
+    }
 
     init(userId: UUID, profile: UserProfile, draft: OnboardingDraft = OnboardingDraft()) {
       self.userId = userId
@@ -96,16 +103,64 @@ struct OnboardingFeature {
         state.profile.nation = nation
         state.profile.homeRegion = state.draft.effectiveRegion
 
-        state.path.append(.stage3(.init(stage: 3)))
+        state.path.append(.stage3(Stage3DietAllergyFeature.State(draft: state.draft)))
         return .none
 
-      case let .path(.element(id: _, action: action)):
-        guard Self.isNext(action) else { return .none }
-        let nextStage = state.currentStage + 1
-        guard let next = Self.makeStage(nextStage, draft: state.draft) else { return .none }
-        state.draft.step = max(state.draft.step, nextStage - 1)
-        state.path.append(next)
+      case let .path(.element(id: _, action: .stage3(.delegate(.completed(dietType, noAllergy, allergyGroups, allergyItems))))):
+        let filtersChanged = state.draft.dietType != dietType
+          || state.draft.noAllergy != noAllergy
+          || state.draft.allergyGroups != allergyGroups
+          || state.draft.allergyItems != allergyItems
+        state.draft.dietType = dietType
+        state.draft.noAllergy = noAllergy
+        state.draft.allergyGroups = allergyGroups
+        state.draft.allergyItems = allergyItems
+        if filtersChanged {
+          state.draft.cards = []
+          state.draft.votes = [:]
+          state.draft.tasteResult = nil
+        }
+        state.draft.step = max(state.draft.step, 3)
+
+        state.profile.dietType = dietType
+
+        state.path.append(.stage4(Stage4FlashcardsFeature.State(draft: state.draft)))
         return .none
+
+      case let .path(.element(id: _, action: .stage4(.delegate(.completed(cards, votes, tasteResult))))):
+        state.draft.cards = cards
+        state.draft.votes = votes
+        state.draft.tasteResult = tasteResult
+        state.draft.step = max(state.draft.step, 4)
+
+        state.profile.tasteWeight = tasteResult.tasteWeight
+        state.profile.likedDishIds = tasteResult.likedDishIds
+        state.profile.dislikedDishIds = tasteResult.dislikedDishIds
+
+        state.path.append(
+          .stage5(
+            Stage5TasteSummaryFeature.State(
+              draft: state.draft,
+              profileId: state.profile.profileId
+            )
+          )
+        )
+        return .none
+
+      case let .path(.element(id: _, action: .stage5(.delegate(.completed(finalDraft))))):
+        state.isCompleted = true
+        state.draft = finalDraft
+        state.profile.tasteWeight = finalDraft.tasteResult?.tasteWeight ?? state.profile.tasteWeight
+        state.profile.onboardingVersion = 1
+        state.profile.onboardingCompletedAt = now
+
+        let userId = state.userId
+        let profileId = state.profile.profileId
+        let localClient = self.localClient
+        return .run { send in
+          localClient.clearDraft(userId, profileId)
+          await send(.delegate(.completed))
+        }
 
       case .path:
         return .none
@@ -122,6 +177,7 @@ struct OnboardingFeature {
     .forEach(\.path, action: \.path)
     .onChange(of: \.draft) { _, newDraft in
       Reduce { state, _ in
+        guard !state.isCompleted else { return .none }
         let userId = state.userId
         let profileId = state.profile.profileId
         let localClient = self.localClient
@@ -129,29 +185,6 @@ struct OnboardingFeature {
           localClient.saveDraft(newDraft, userId, profileId)
         }
       }
-    }
-  }
-
-  // MARK: - Helpers
-
-  private static func isNext(_ action: Path.Action) -> Bool {
-    switch action {
-    case .stage3(.delegate(.next)),
-         .stage4(.delegate(.next)),
-         .stage5(.delegate(.next)):
-      return true
-    default:
-      return false
-    }
-  }
-
-  private static func makeStage(_ stage: Int, draft: OnboardingDraft) -> Path.State? {
-    switch stage {
-    case 2: return .stage2(Stage2RegionFeature.State(draft: draft))
-    case 3: return .stage3(.init(stage: 3))
-    case 4: return .stage4(.init(stage: 4))
-    case 5: return .stage5(.init(stage: 5))
-    default: return nil
     }
   }
 }

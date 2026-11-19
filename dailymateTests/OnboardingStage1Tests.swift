@@ -196,3 +196,363 @@ struct OnboardingStage2Tests {
     await store.receive(.delegate(.completed(nation: .other, homeRegion: nil)))
   }
 }
+
+@MainActor
+@Suite("Onboarding — Stage 3 (Chế độ ăn & Dị ứng)")
+struct OnboardingStage3Tests {
+  @Test("Chọn cả nhóm dị ứng qua Bottom Sheet Bước 1 và thử bấm Không dị ứng gì")
+  func selectWholeAllergyGroupAndNoAllergy() async {
+    let store = TestStore(initialState: Stage3DietAllergyFeature.State()) {
+      Stage3DietAllergyFeature()
+    }
+
+    #expect(store.state.dietType == .omnivore)
+    #expect(store.state.canContinue == false)
+
+    await store.send(.continueButtonTapped) {
+      $0.showsValidation = true
+      $0.shakeTrigger = 1
+    }
+    #expect(store.state.allergyError != nil)
+
+    await store.send(.dietTypeSelected(.vegetarian)) {
+      $0.dietType = .vegetarian
+    }
+
+    await store.send(.allergyGroupChipTapped(.seafood)) {
+      $0.activeSheet = Stage3DietAllergyFeature.AllergySheetState(
+        group: .seafood,
+        step: .scopeSelection,
+        searchQuery: "",
+        draftSelectedItems: []
+      )
+    }
+
+    await store.send(.sheetAllGroupSelected) {
+      $0.allergyGroups = [.seafood]
+      $0.noAllergy = false
+      $0.showsValidation = false
+      $0.activeSheet = nil
+    }
+    #expect(store.state.canContinue == true)
+    #expect(store.state.badgeText(for: .seafood) == "Tất cả")
+
+    // Bấm "Không dị ứng gì" sẽ xoá toàn bộ nhóm & nguyên liệu đã chọn
+    await store.send(.noAllergyTapped) {
+      $0.noAllergy = true
+      $0.allergyGroups = []
+      $0.allergyItems = []
+    }
+    #expect(store.state.canContinue == true)
+
+    await store.send(.continueButtonTapped)
+    await store.receive(
+      .delegate(
+        .completed(
+          dietType: .vegetarian,
+          noAllergy: true,
+          allergyGroups: [],
+          allergyItems: []
+        )
+      )
+    )
+  }
+
+  @Test("Chọn Chỉ một số loại → gọi API lấy nguyên liệu, tìm kiếm, tick chọn và bấm Xong")
+  func selectSpecificAllergyIngredients() async {
+    let mockItems = [
+      AllergyItem(id: 101, name: "tôm", group: .seafood),
+      AllergyItem(id: 102, name: "cua", group: .seafood),
+      AllergyItem(id: 103, name: "mực", group: .seafood),
+    ]
+
+    let store = TestStore(
+      initialState: Stage3DietAllergyFeature.State(allergyGroups: [.seafood])
+    ) {
+      Stage3DietAllergyFeature()
+    } withDependencies: {
+      $0.onboardingAPIClient.fetchAllergyIngredients = { group, _ in
+        #expect(group == .seafood)
+        return mockItems
+      }
+    }
+
+    await store.send(.allergyGroupChipTapped(.seafood)) {
+      $0.activeSheet = Stage3DietAllergyFeature.AllergySheetState(
+        group: .seafood,
+        step: .scopeSelection
+      )
+    }
+
+    await store.send(.sheetSomeItemsSelected) {
+      $0.activeSheet?.step = .ingredientPicker
+      $0.activeSheet?.isLoadingIngredients = true
+    }
+
+    await store.receive(\.allergyIngredientsLoaded) {
+      $0.cachedIngredientsByGroup[.seafood] = mockItems
+      $0.activeSheet?.isLoadingIngredients = false
+    }
+
+    await store.send(.sheetSearchQueryChanged("tom")) {
+      $0.activeSheet?.searchQuery = "tom"
+    }
+    #expect(store.state.filteredSheetIngredients.map(\.id) == [101])
+
+    await store.send(.sheetIngredientToggled(mockItems[0])) {
+      $0.activeSheet?.draftSelectedItems = [mockItems[0]]
+    }
+    await store.send(.sheetIngredientToggled(mockItems[1])) {
+      $0.activeSheet?.draftSelectedItems = [mockItems[0], mockItems[1]]
+    }
+
+    await store.send(.sheetDoneButtonTapped) {
+      $0.allergyGroups = []
+      $0.allergyItems = [mockItems[0], mockItems[1]]
+      $0.noAllergy = false
+      $0.activeSheet = nil
+    }
+
+    #expect(store.state.badgeText(for: .seafood) == "2")
+    #expect(store.state.canContinue == true)
+  }
+}
+
+@MainActor
+@Suite("Onboarding — Stage 4 (Flashcards & Taste Profile)")
+struct OnboardingStage4Tests {
+  private static let sampleCards = [
+    Flashcard(
+      dishId: "dish_1",
+      title: "Cá đối kho tiêu",
+      imageURL: nil,
+      label: "Mặn đậm",
+      tasteProfile: .default
+    ),
+    Flashcard(
+      dishId: "dish_2",
+      title: "Canh chua cá lóc",
+      imageURL: nil,
+      label: "Chua thanh",
+      tasteProfile: .default
+    ),
+    Flashcard(
+      dishId: "dish_3",
+      title: "Thịt kho tàu",
+      imageURL: nil,
+      label: "Ngọt dịu",
+      tasteProfile: .default
+    ),
+  ]
+
+  @Test("onAppear tải flashcards → vote đủ 3 thẻ → gọi computeTasteProfile và trả TasteResult")
+  func fetchAndVoteAllCards() async {
+    let expectedTaste = TasteResult(
+      tasteWeight: TasteVector(
+        sweet: 0.6, sour: 0.5, salty: 0.7, bitter: 0.1,
+        umami: 0.8, spicy: 0.4, astringent: 0.1
+      ),
+      source: .flashcards,
+      likedDishIds: ["dish_1"],
+      dislikedDishIds: ["dish_2"]
+    )
+
+    let capturedVotes = LockIsolated<[String: SwipeVote]>([:])
+
+    let store = TestStore(
+      initialState: Stage4FlashcardsFeature.State(draft: OnboardingDraft())
+    ) {
+      Stage4FlashcardsFeature()
+    } withDependencies: {
+      $0.onboardingAPIClient.fetchFlashcards = { _, _ in
+        Self.sampleCards
+      }
+      $0.onboardingAPIClient.computeTasteProfile = { draft, _ in
+        capturedVotes.setValue(draft.votes)
+        return expectedTaste
+      }
+    }
+
+    await store.send(.onAppear) {
+      $0.isLoadingCards = true
+    }
+
+    await store.receive(\.flashcardsLoaded) {
+      $0.isLoadingCards = false
+      $0.cards = Self.sampleCards
+      $0.currentIndex = 0
+    }
+    #expect(store.state.progressDetail == "Thẻ 1/3")
+
+    await store.send(.voteSubmitted(.like)) {
+      $0.votes["dish_1"] = .like
+      $0.currentIndex = 1
+    }
+    #expect(store.state.progressDetail == "Thẻ 2/3")
+
+    await store.send(.voteSubmitted(.dislike)) {
+      $0.votes["dish_2"] = .dislike
+      $0.currentIndex = 2
+    }
+    #expect(store.state.progressDetail == "Thẻ 3/3")
+
+    await store.send(.voteSubmitted(.neutral)) {
+      $0.votes["dish_3"] = .neutral
+      $0.isComputingTaste = true
+    }
+
+    await store.receive(\.tasteProfileComputed) {
+      $0.isComputingTaste = false
+    }
+
+    await store.receive(
+      .delegate(
+        .completed(
+          cards: Self.sampleCards,
+          votes: [
+            "dish_1": .like,
+            "dish_2": .dislike,
+            "dish_3": .neutral,
+          ],
+          tasteResult: expectedTaste
+        )
+      )
+    )
+
+    #expect(capturedVotes.value == [
+      "dish_1": .like,
+      "dish_2": .dislike,
+      "dish_3": .neutral,
+    ])
+  }
+
+  @Test("Bấm Bỏ qua → xoá votes và gọi computeTasteProfile theo vùng miền")
+  func skipToRegionTaste() async {
+    let regionTaste = TasteResult(
+      tasteWeight: .default,
+      source: .region,
+      likedDishIds: [],
+      dislikedDishIds: []
+    )
+
+    let store = TestStore(
+      initialState: Stage4FlashcardsFeature.State(
+        draft: OnboardingDraft(
+          cards: Self.sampleCards,
+          votes: ["dish_1": .like]
+        )
+      )
+    ) {
+      Stage4FlashcardsFeature()
+    } withDependencies: {
+      $0.onboardingAPIClient.computeTasteProfile = { draft, _ in
+        #expect(draft.votes.isEmpty)
+        return regionTaste
+      }
+    }
+
+    await store.send(.skipToRegionTasteTapped) {
+      $0.votes = [:]
+      $0.isComputingTaste = true
+    }
+
+    await store.receive(\.tasteProfileComputed) {
+      $0.isComputingTaste = false
+    }
+
+    await store.receive(
+      .delegate(
+        .completed(
+          cards: Self.sampleCards,
+          votes: [:],
+          tasteResult: regionTaste
+        )
+      )
+    )
+  }
+}
+
+@MainActor
+@Suite("Onboarding — Stage 5 (Tổng kết Khẩu vị & Hoàn tất)")
+struct OnboardingStage5Tests {
+  @Test("Sắp xếp 7 chiều vị giác giảm dần, chỉnh thanh vị giác và gọi completeOnboarding lên Supabase")
+  func editTasteAndCompleteOnboarding() async {
+    let initialVector = TasteVector(
+      sweet: 0.31,
+      sour: 0.31,
+      salty: 0.54,
+      bitter: 0.25,
+      umami: 0.52,
+      spicy: 0.51,
+      astringent: 0.30
+    )
+    let initialDraft = OnboardingDraft(
+      step: 4,
+      gender: .male,
+      birthYear: 2000,
+      nation: .vietnam,
+      homeRegion: .central,
+      dietType: .omnivore,
+      noAllergy: true,
+      tasteResult: TasteResult(
+        tasteWeight: initialVector,
+        source: .flashcards,
+        likedDishIds: ["dish_1"],
+        dislikedDishIds: ["dish_2"]
+      )
+    )
+
+    let completedDraft = LockIsolated<OnboardingDraft?>(nil)
+    let completedProfileId = LockIsolated<String?>(nil)
+
+    let store = TestStore(
+      initialState: Stage5TasteSummaryFeature.State(
+        draft: initialDraft,
+        profileId: OnboardingMapper.defaultProfileId
+      )
+    ) {
+      Stage5TasteSummaryFeature()
+    } withDependencies: {
+      $0.onboardingSupabaseClient.completeOnboarding = { draft, profileId in
+        completedDraft.setValue(draft)
+        completedProfileId.setValue(profileId)
+      }
+    }
+
+    #expect(store.state.topThreeHeadline == "Đậm đà · Ngọt thịt · Cay — mình nhớ rồi nha!")
+    #expect(store.state.dimensionRows.prefix(3).map(\.dimension) == [.salty, .umami, .spicy])
+    #expect(store.state.regionSummaryTitle == "Miền Trung")
+    #expect(store.state.dietSummaryTitle == "Ăn mặn")
+    #expect(store.state.allergySummaryTitle == "Không dị ứng gì")
+
+    let fixedOrder = TasteDimension.sortedByWeight(in: initialVector)
+
+    await store.send(.toggleEditTasteTapped) {
+      $0.isEditingTaste = true
+      $0.editingOrder = fixedOrder
+    }
+
+    await store.send(.tasteValueChanged(.spicy, 0.85)) {
+      $0.tasteWeight.spicy = 0.85
+      $0.draft.tasteResult?.tasteWeight.spicy = 0.85
+    }
+
+    await store.send(.finishButtonTapped) {
+      $0.isEditingTaste = false
+      $0.editingOrder = nil
+      $0.isSubmitting = true
+      $0.draft.step = 5
+    }
+
+    await store.receive(\.completeOnboardingResponse) {
+      $0.isSubmitting = false
+    }
+
+    await store.receive(
+      .delegate(.completed(finalDraft: store.state.draft))
+    )
+
+    #expect(completedDraft.value?.tasteResult?.tasteWeight.spicy == 0.85)
+    #expect(completedProfileId.value == OnboardingMapper.defaultProfileId)
+  }
+}

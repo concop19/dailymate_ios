@@ -16,6 +16,7 @@ struct OnboardingView: View {
       OnboardingHeroProgressView(
         currentStage: store.currentStage,
         totalStages: OnboardingFeature.State.totalStages,
+        detail: store.heroDetail,
         canGoBack: store.canGoBack,
         onBack: { store.send(.backButtonTapped) }
       )
@@ -28,9 +29,9 @@ struct OnboardingView: View {
       } destination: { store in
         switch store.case {
         case let .stage2(store): Stage2RegionView(store: store)
-        case let .stage3(store): OnboardingPlaceholderStageView(store: store)
-        case let .stage4(store): OnboardingPlaceholderStageView(store: store)
-        case let .stage5(store): OnboardingPlaceholderStageView(store: store)
+        case let .stage3(store): Stage3DietAllergyView(store: store)
+        case let .stage4(store): Stage4FlashcardsView(store: store)
+        case let .stage5(store): Stage5TasteSummaryView(store: store)
         }
       }
     }
