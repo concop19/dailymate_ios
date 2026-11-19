@@ -71,4 +71,4 @@ with check (user_id = (select auth.uid()))
 
   → Mọi thao tác từ Swift client bắt buộc phải có Supabase session đã đăng nhập và user_id trùng khớp auth.uid().
 
-  
+

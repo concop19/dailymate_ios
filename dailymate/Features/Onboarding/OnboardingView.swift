@@ -27,7 +27,7 @@ struct OnboardingView: View {
         Stage1PersonalView(store: store.scope(state: \.stage1, action: \.stage1))
       } destination: { store in
         switch store.case {
-        case let .stage2(store): OnboardingPlaceholderStageView(store: store)
+        case let .stage2(store): Stage2RegionView(store: store)
         case let .stage3(store): OnboardingPlaceholderStageView(store: store)
         case let .stage4(store): OnboardingPlaceholderStageView(store: store)
         case let .stage5(store): OnboardingPlaceholderStageView(store: store)

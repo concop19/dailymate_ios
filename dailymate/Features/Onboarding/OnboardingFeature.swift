@@ -16,7 +16,7 @@ import Foundation
 struct OnboardingFeature {
   @Reducer
   enum Path {
-    case stage2(OnboardingPlaceholderStageFeature)
+    case stage2(Stage2RegionFeature)
     case stage3(OnboardingPlaceholderStageFeature)
     case stage4(OnboardingPlaceholderStageFeature)
     case stage5(OnboardingPlaceholderStageFeature)
@@ -76,16 +76,33 @@ struct OnboardingFeature {
           note: "onboarding"
         )
         state.draft.step = max(state.draft.step, 1)
-        state.path.append(.stage2(.init(stage: 2)))
+
+        let currentYear = Calendar(identifier: .gregorian).component(.year, from: now)
+        state.profile.gender = gender
+        state.profile.birthYear = birthYear
+        state.profile.age = max(1, currentYear - birthYear)
+
+        state.path.append(.stage2(Stage2RegionFeature.State(draft: state.draft)))
         return .none
 
       case .stage1:
         return .none
 
+      case let .path(.element(id: _, action: .stage2(.delegate(.completed(nation, homeRegion))))):
+        state.draft.nation = nation
+        state.draft.homeRegion = homeRegion
+        state.draft.step = max(state.draft.step, 2)
+
+        state.profile.nation = nation
+        state.profile.homeRegion = state.draft.effectiveRegion
+
+        state.path.append(.stage3(.init(stage: 3)))
+        return .none
+
       case let .path(.element(id: _, action: action)):
         guard Self.isNext(action) else { return .none }
         let nextStage = state.currentStage + 1
-        guard let next = Self.makeStage(nextStage) else { return .none }
+        guard let next = Self.makeStage(nextStage, draft: state.draft) else { return .none }
         state.draft.step = max(state.draft.step, nextStage - 1)
         state.path.append(next)
         return .none
@@ -119,8 +136,7 @@ struct OnboardingFeature {
 
   private static func isNext(_ action: Path.Action) -> Bool {
     switch action {
-    case .stage2(.delegate(.next)),
-         .stage3(.delegate(.next)),
+    case .stage3(.delegate(.next)),
          .stage4(.delegate(.next)),
          .stage5(.delegate(.next)):
       return true
@@ -129,9 +145,9 @@ struct OnboardingFeature {
     }
   }
 
-  private static func makeStage(_ stage: Int) -> Path.State? {
+  private static func makeStage(_ stage: Int, draft: OnboardingDraft) -> Path.State? {
     switch stage {
-    case 2: return .stage2(.init(stage: 2))
+    case 2: return .stage2(Stage2RegionFeature.State(draft: draft))
     case 3: return .stage3(.init(stage: 3))
     case 4: return .stage4(.init(stage: 4))
     case 5: return .stage5(.init(stage: 5))

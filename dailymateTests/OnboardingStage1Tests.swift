@@ -129,7 +129,11 @@ struct OnboardingStage1Tests {
       $0.draft.weightKg = 35.5
       $0.draft.bodyMetrics = BodyMetrics(heightCm: 151, weightKg: 35.5, measuredAt: fixedNow, note: "onboarding")
       $0.draft.step = 1
-      $0.path.append(.stage2(.init(stage: 2)))
+      let expectedYear = Calendar(identifier: .gregorian).component(.year, from: fixedNow)
+      $0.profile.gender = .male
+      $0.profile.birthYear = 2015
+      $0.profile.age = max(1, expectedYear - 2015)
+      $0.path.append(.stage2(Stage2RegionFeature.State(draft: $0.draft)))
     }
     await store.finish()
 
@@ -143,5 +147,52 @@ struct OnboardingStage1Tests {
       $0.path.removeLast()
     }
     #expect(store.state.currentStage == 1)
+  }
+}
+
+@MainActor
+@Suite("Onboarding — Stage 2 (Quốc gia & Vùng miền)")
+struct OnboardingStage2Tests {
+  @Test("Mặc định là Việt Nam, bắt buộc chọn 1 trong 3 miền mới cho qua")
+  func vietnamRequiresRegion() async {
+    let store = TestStore(initialState: Stage2RegionFeature.State()) {
+      Stage2RegionFeature()
+    }
+
+    #expect(store.state.nation == .vietnam)
+    #expect(store.state.showsVietnameseRegions == true)
+    #expect(store.state.canContinue == false)
+
+    await store.send(.continueButtonTapped) {
+      $0.showsValidation = true
+      $0.shakeTrigger = 1
+    }
+    #expect(store.state.regionError != nil)
+
+    await store.send(.regionSelected(.central)) {
+      $0.homeRegion = .central
+      $0.showsValidation = false
+    }
+    #expect(store.state.canContinue == true)
+    #expect(store.state.regionError == nil)
+
+    await store.send(.continueButtonTapped)
+    await store.receive(\.delegate.completed)
+  }
+
+  @Test("Chọn Nước khác → ẩn 3 miền, cho phép qua ngay với homeRegion = nil")
+  func otherNationSkipsRegion() async {
+    let store = TestStore(initialState: Stage2RegionFeature.State(nation: .vietnam, homeRegion: .northern)) {
+      Stage2RegionFeature()
+    }
+
+    await store.send(.nationSelected(.other)) {
+      $0.nation = .other
+    }
+    #expect(store.state.showsVietnameseRegions == false)
+    #expect(store.state.canContinue == true)
+
+    await store.send(.continueButtonTapped)
+    await store.receive(.delegate(.completed(nation: .other, homeRegion: nil)))
   }
 }
