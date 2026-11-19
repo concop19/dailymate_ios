@@ -6,11 +6,16 @@ struct AppView: View {
 
     var body: some View {
         ZStack {
-            if store.isCheckingSession {
+            if store.isCheckingSession || (store.isAuthenticated && store.isLoadingProfile) {
                 launchView
             } else if store.isAuthenticated {
-                HomeView(store: store.scope(state: \.home, action: \.home))
-                    .transition(.opacity)
+                if let onboardingStore = store.scope(state: \.onboarding, action: \.onboarding) {
+                    OnboardingView(store: onboardingStore)
+                        .transition(.opacity)
+                } else {
+                    HomeView(store: store.scope(state: \.home, action: \.home))
+                        .transition(.opacity)
+                }
             } else {
                 AuthView(store: store.scope(state: \.auth, action: \.auth))
                     .transition(.opacity)
@@ -18,6 +23,8 @@ struct AppView: View {
         }
         .animation(.easeInOut(duration: 0.3), value: store.isCheckingSession)
         .animation(.easeInOut(duration: 0.3), value: store.isAuthenticated)
+        .animation(.easeInOut(duration: 0.3), value: store.isLoadingProfile)
+        .animation(.easeInOut(duration: 0.3), value: store.onboarding == nil)
         .task { await store.send(.task).finish() }
     }
 

@@ -52,8 +52,11 @@ public enum OnboardingMapper {
 
     // MARK: - Supabase DB Mapping
 
+    /// `profile_id` mặc định của hồ sơ chính (dùng làm fallback khi tài khoản chưa có hồ sơ).
+    public static let defaultProfileId = "default"
+
     public static func defaultStartupProfile(
-        profileId: String = "self",
+        profileId: String = OnboardingMapper.defaultProfileId,
         displayName: String = "Bạn"
     ) -> UserProfile {
         UserProfile(
@@ -114,8 +117,8 @@ public enum OnboardingMapper {
 
         let profileData = ProfileDataDTO(
             displayName: existingData?.displayName ?? defaultDisplayName,
-            relation: existingData?.relation ?? (profileId == "self" ? "self" : nil),
-            isDefault: existingData?.isDefault ?? (profileId == "self"),
+            relation: existingData?.relation ?? (profileId == defaultProfileId ? "self" : nil),
+            isDefault: existingData?.isDefault ?? (profileId == defaultProfileId),
             gender: draft.gender?.rawValue ?? existingData?.gender,
             birthYear: draft.birthYear ?? existingData?.birthYear,
             age: age,

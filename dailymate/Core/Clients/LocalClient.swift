@@ -37,7 +37,11 @@ extension LocalClient: DependencyKey {
 
         return Self(
             loadDraft: { userId, profileId in
-                let defaults = suiteName.flatMap(UserDefaults.init(suiteName:)) ?? .standard
+                let defaults: UserDefaults
+                if let name = suiteName, let customDefaults = UserDefaults(suiteName: name) {
+                    defaults = customDefaults
+                } else {
+                    defaults = UserDefaults.standard }
                 let key = storageKey(userId: userId, profileId: profileId)
                 guard let data = defaults.data(forKey: key) else { return nil }
                 return try? decoder.decode(OnboardingDraft.self, from: data)

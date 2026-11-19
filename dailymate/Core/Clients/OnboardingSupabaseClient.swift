@@ -52,14 +52,14 @@ extension OnboardingSupabaseClient: DependencyKey {
                     .value
 
                 if let selectedRow = rows.first(where: { $0.data.isDefault == true })
-                    ?? rows.first(where: { $0.profileId == "self" })
+                    ?? rows.first(where: { $0.profileId == OnboardingMapper.defaultProfileId })
                     ?? rows.first {
                     return OnboardingMapper.toEntity(selectedRow)
                 }
 
                 let defaultName = fallbackDisplayName(from: session.user)
                 return OnboardingMapper.defaultStartupProfile(
-                    profileId: "self",
+                    profileId: OnboardingMapper.defaultProfileId,
                     displayName: defaultName
                 )
             },

@@ -14,6 +14,8 @@ public struct OnboardingDraft: Codable, Equatable, Sendable {
     public var birthYear: Int? = nil
     public var heightCm: Double = 165
     public var weightKg: Double = 55
+    /// Chỉ số cơ thể chốt lại khi hoàn tất Stage 1 (đồng bộ với `heightCm` / `weightKg`).
+    public var bodyMetrics: BodyMetrics? = nil
     public var nation: Nation = .vietnam
     public var homeRegion: HomeRegion? = nil
     public var dietType: DietType = .omnivore
