@@ -1,0 +1,74 @@
+
+public.app_profiles (L1-L8)
+sql
+create table if not exists public.app_profiles (
+  user_id    uuid        not null references auth.users(id) on delete cascade,
+  profile_id text        not null,
+  data       jsonb       not null default '{}',
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  primary key (user_id, profile_id)
+);
+
+  
+Khóa chính (PK): (user_id, profile_id) → dùng cho onConflict: "user_id,profile_id".
+
+  
+Trigger đi kèm: app_profile_member_limit (L35-L37) — chạy BEFORE INSERT OR UPDATE OF user_id, chặn tạo mới nếu tài khoản đã có >= 5 hồ sơ (ném mã lỗi P0001, message PROFILE_LIMIT_REACHED).
+
+  
+2. public.app_body_metrics (L18-L25)
+sql
+create table if not exists public.app_body_metrics (
+  id          uuid        primary key default gen_random_uuid(),
+  user_id     uuid        not null,
+  profile_id  text        not null,
+  data        jsonb       not null,
+  measured_at timestamptz not null default now(),
+  foreign key (user_id, profile_id) references public.app_profiles on delete cascade
+);
+
+  
+Khóa chính (PK): id (uuid, Postgres tự sinh khi INSERT).
+
+  
+Khóa ngoại (FK): (user_id, profile_id) → app_profiles (ON DELETE CASCADE).
+
+  
+Cột data (JSONB): { "height_cm": 165, "weight_kg": 55, "measured_at": "...", "note": "onboarding" }.
+
+  
+3. public.app_allergies (L27-L35)
+sql
+create table if not exists public.app_allergies (
+  user_id      uuid        not null,
+  profile_id   text        not null,
+  allergy_key  text        not null,
+  display_name text,
+  added_at     timestamptz not null default now(),
+  primary key (user_id, profile_id, allergy_key),
+  foreign key (user_id, profile_id) references public.app_profiles on delete cascade
+);
+
+  
+Khóa chính (PK): (user_id, profile_id, allergy_key) → dùng cho onConflict: "user_id,profile_id,allergy_key".
+
+  
+Khóa ngoại (FK): (user_id, profile_id) → app_profiles (ON DELETE CASCADE).
+
+  
+4. Bảo mật RLS chung cho cả 3 bảng (L71-L91)
+
+  
+Cả 3 bảng đều bật Row Level Security (ENABLE ROW LEVEL SECURITY).
+
+  
+Chỉ cấp quyền SELECT, INSERT, UPDATE, DELETE cho role authenticated với policy own_rows:
+  
+sql
+using (user_id = (select auth.uid()))
+with check (user_id = (select auth.uid()))
+
+  → Mọi thao tác từ Swift client bắt buộc phải có Supabase session đã đăng nhập và user_id trùng khớp auth.uid().
+
+  

@@ -64,3 +64,57 @@ public struct BackendEndpoint: Sendable, Equatable {
     )
   }
 }
+
+
+
+extension BackendEndpoint {
+  /// GET /api/v1/onboarding/allergy-ingredients?group=<key>&lang=<lang>
+  static func onboardingAllergyIngredients(
+    group: AllergyGroup,
+    language: String = "vi"
+  ) -> Self {
+    var endpoint = Self.get(
+      "/api/v1/onboarding/allergy-ingredients",
+      queryItems: [
+        URLQueryItem(name: "group", value: group.rawValue),
+        URLQueryItem(name: "lang", value: language),
+      ],
+      requiresAuth: true,
+      timeoutInterval: 12
+    )
+    endpoint.language = language
+    return endpoint
+  }
+
+  /// POST /api/v1/onboarding/flashcards?lang=<lang>
+  static func onboardingFlashcards(
+    _ body: FlashcardsRequestDTO,
+    language: String = "vi"
+  ) throws -> Self {
+    var endpoint = try Self.post(
+      "/api/v1/onboarding/flashcards",
+      body: body,
+      queryItems: [URLQueryItem(name: "lang", value: language)],
+      requiresAuth: true,
+      timeoutInterval: 12
+    )
+    endpoint.language = language
+    return endpoint
+  }
+
+  /// POST /api/v1/onboarding/taste-profile?lang=<lang>
+  static func onboardingTasteProfile(
+    _ body: TasteProfileRequestDTO,
+    language: String = "vi"
+  ) throws -> Self {
+    var endpoint = try Self.post(
+      "/api/v1/onboarding/taste-profile",
+      body: body,
+      queryItems: [URLQueryItem(name: "lang", value: language)],
+      requiresAuth: true,
+      timeoutInterval: 12
+    )
+    endpoint.language = language
+    return endpoint
+  }
+}
