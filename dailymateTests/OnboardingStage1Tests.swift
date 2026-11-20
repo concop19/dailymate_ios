@@ -503,19 +503,18 @@ struct OnboardingStage5Tests {
     )
 
     let completedDraft = LockIsolated<OnboardingDraft?>(nil)
-    let completedProfileId = LockIsolated<String?>(nil)
+    let completedProfileId = LockIsolated<String?>("unset")
+    let savedProfileId = "11111111-1111-1111-1111-111111111111"
 
     let store = TestStore(
-      initialState: Stage5TasteSummaryFeature.State(
-        draft: initialDraft,
-        profileId: OnboardingMapper.defaultProfileId
-      )
+      initialState: Stage5TasteSummaryFeature.State(draft: initialDraft)
     ) {
       Stage5TasteSummaryFeature()
     } withDependencies: {
-      $0.onboardingSupabaseClient.completeOnboarding = { draft, profileId in
+      $0.onboardingSupabaseClient.completeOnboarding = { draft, existingProfileId in
         completedDraft.setValue(draft)
-        completedProfileId.setValue(profileId)
+        completedProfileId.setValue(existingProfileId)
+        return savedProfileId
       }
     }
 
@@ -534,7 +533,14 @@ struct OnboardingStage5Tests {
 
     await store.send(.tasteValueChanged(.spicy, 0.85)) {
       $0.tasteWeight.spicy = 0.85
-      $0.draft.tasteResult?.tasteWeight.spicy = 0.85
+      var expectedWeight = initialVector
+      expectedWeight.spicy = 0.85
+      $0.draft.tasteResult = TasteResult(
+        tasteWeight: expectedWeight,
+        source: .flashcards,
+        likedDishIds: ["dish_1"],
+        dislikedDishIds: ["dish_2"]
+      )
     }
 
     await store.send(.finishButtonTapped) {
@@ -549,10 +555,156 @@ struct OnboardingStage5Tests {
     }
 
     await store.receive(
-      .delegate(.completed(finalDraft: store.state.draft))
+      .delegate(.completed(finalDraft: store.state.draft, profileId: savedProfileId))
     )
 
     #expect(completedDraft.value?.tasteResult?.tasteWeight.spicy == 0.85)
-    #expect(completedProfileId.value == OnboardingMapper.defaultProfileId)
+    // Hồ sơ mới → không có existingProfileId (client sẽ insert user_profiles).
+    #expect(completedProfileId.value == nil)
+  }
+
+  @Test("Lỗi giới hạn 5 hồ sơ → hiện thông báo thân thiện, không hoàn tất")
+  func profileLimitReached() async {
+    let store = TestStore(
+      initialState: Stage5TasteSummaryFeature.State(draft: OnboardingDraft(step: 4))
+    ) {
+      Stage5TasteSummaryFeature()
+    } withDependencies: {
+      $0.onboardingSupabaseClient.completeOnboarding = { _, _ in
+        throw OnboardingSupabaseError.profileLimitReached
+      }
+    }
+    store.exhaustivity = .off
+
+    await store.send(.finishButtonTapped)
+    await store.receive(\.completeOnboardingResponse) {
+      $0.isSubmitting = false
+      $0.errorMessage = OnboardingSupabaseError.profileLimitReached.errorDescription
+    }
+  }
+}
+
+@Suite("OnboardingMapper — schema user_profiles mới")
+struct OnboardingMapperSchemaTests {
+  @Test("Dị ứng nằm trong data.allergies, patch không ghi đè thông tin định danh, không có body_metrics")
+  func profileDataShape() throws {
+    let draft = OnboardingDraft(
+      birthYear: 2000,
+      allergyGroups: [.seafood, .seafood],
+      allergyItems: [AllergyItem(id: 7, name: "Tôm", group: .seafood)]
+    )
+    let insertData = OnboardingMapper.toProfileData(draft: draft, includeIdentity: true, displayName: "Mạnh")
+    #expect(insertData.displayName == "Mạnh")
+    #expect(insertData.allergies?.map(\.allergyKey) == ["seafood", "7"])
+    #expect(insertData.onboardingCompletedAt != nil)
+
+    let patchData = OnboardingMapper.toProfileData(draft: draft, includeIdentity: false)
+    let json = try JSONSerialization.jsonObject(with: JSONEncoder().encode(patchData)) as? [String: Any]
+    #expect(json?["displayName"] == nil)
+    #expect(json?["isDefault"] == nil)
+    #expect(json?["body_metrics"] == nil)
+    #expect((json?["allergies"] as? [Any])?.count == 2)
+  }
+
+  @Test("Không dị ứng → gửi mảng rỗng để thay toàn bộ allergies cũ")
+  func noAllergySendsEmptyArray() {
+    let draft = OnboardingDraft(allergyGroups: [.beef], noAllergy: true)
+    #expect(OnboardingMapper.toProfileData(draft: draft, includeIdentity: false).allergies == [])
+  }
+
+  @Test("Bootstrap: ưu tiên active_profile_id, sau đó sort_order nhỏ nhất")
+  func selectStartupRow() throws {
+    let json = """
+    {"settings":{"active_profile_id":"22222222-2222-2222-2222-222222222222"},
+     "profiles":[
+       {"profile_id":"11111111-1111-1111-1111-111111111111","sort_order":0,"data":{"displayName":"A"}},
+       {"profile_id":"22222222-2222-2222-2222-222222222222","sort_order":1,"data":{"displayName":"B"}}
+     ],
+     "server_time":"2026-11-20T00:00:00Z"}
+    """
+    let bootstrap = try JSONDecoder().decode(BootstrapResponseDTO.self, from: Data(json.utf8))
+    #expect(OnboardingMapper.selectStartupRow(bootstrap)?.data.displayName == "B")
+
+    let noActive = try JSONDecoder().decode(
+      BootstrapResponseDTO.self,
+      from: Data(json.replacingOccurrences(of: "22222222-2222-2222-2222-222222222222\"}", with: "x\"}").utf8)
+    )
+    #expect(OnboardingMapper.selectStartupRow(noActive)?.data.displayName == "A")
+
+    let empty = try JSONDecoder().decode(BootstrapResponseDTO.self, from: Data(#"{"settings":{},"profiles":[]}"#.utf8))
+    #expect(OnboardingMapper.selectStartupRow(empty) == nil)
+  }
+}
+
+@MainActor
+@Suite("AppFeature — khởi động với cache / mất mạng")
+struct AppStartupTests {
+  struct Offline: Error {}
+
+  private static let userId = UUID(uuidString: "00000000-0000-0000-0000-000000000009")!
+
+  private static var completedProfile: UserProfile {
+    var profile = OnboardingMapper.defaultStartupProfile()
+    profile.profileId = "11111111-1111-1111-1111-111111111111"
+    profile.isPersisted = true
+    profile.onboardingCompletedAt = Date(timeIntervalSince1970: 1_700_000_000)
+    return profile
+  }
+
+  @Test("Có cache + mất mạng → vào Home ngay, không bị đẩy vào onboarding")
+  func cachedOffline() async {
+    let store = TestStore(initialState: AppFeature.State()) {
+      AppFeature()
+    } withDependencies: {
+      $0.localClient.loadStartupProfile = { _ in Self.completedProfile }
+      $0.onboardingSupabaseClient.loadStartupProfile = { throw Offline() }
+    }
+
+    await store.send(.authStateChanged(userId: Self.userId)) {
+      $0.isCheckingSession = false
+      $0.isAuthenticated = true
+      $0.isLoadingProfile = false
+    }
+    await store.receive(\.startupProfileLoaded)
+    #expect(store.state.onboarding == nil)
+  }
+
+  @Test("Không cache + mất mạng → không kẹt màn chờ, không ép onboarding")
+  func noCacheOffline() async {
+    let store = TestStore(initialState: AppFeature.State()) {
+      AppFeature()
+    } withDependencies: {
+      $0.localClient.loadStartupProfile = { _ in nil }
+      $0.onboardingSupabaseClient.loadStartupProfile = { throw Offline() }
+    }
+
+    await store.send(.authStateChanged(userId: Self.userId)) {
+      $0.isCheckingSession = false
+      $0.isAuthenticated = true
+      $0.isLoadingProfile = true
+    }
+    await store.receive(\.startupProfileLoaded) {
+      $0.isLoadingProfile = false
+    }
+    #expect(store.state.onboarding == nil)
+  }
+
+  @Test("User mới (server chưa có hồ sơ) → vào onboarding, không cache hồ sơ tạm")
+  func newUserGoesToOnboarding() async {
+    let saved = LockIsolated(0)
+    let store = TestStore(initialState: AppFeature.State()) {
+      AppFeature()
+    } withDependencies: {
+      $0.localClient.loadStartupProfile = { _ in nil }
+      $0.localClient.saveStartupProfile = { _, _ in saved.withValue { $0 += 1 } }
+      $0.localClient.loadDraft = { _, _ in nil }
+      $0.onboardingSupabaseClient.loadStartupProfile = { OnboardingMapper.defaultStartupProfile() }
+    }
+    store.exhaustivity = .off
+
+    await store.send(.authStateChanged(userId: Self.userId))
+    await store.receive(\.startupProfileLoaded)
+    #expect(store.state.onboarding?.profile.isPersisted == false)
+    #expect(saved.value == 0)
   }
 }

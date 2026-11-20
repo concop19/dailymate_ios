@@ -25,6 +25,10 @@ public struct OnboardingDraft: Codable, Equatable, Sendable {
     public var cards: [Flashcard] = []
     public var votes: [String: SwipeVote] = [:]   // [dishId: vote]
     public var tasteResult: TasteResult? = nil
+    /// `profile_id` sinh sẵn trên máy cho hồ sơ mới. Được lưu cùng bản nháp để khi
+    /// hoàn tất onboarding bị lỗi giữa chừng (hoặc app bị tắt) thì lần thử lại
+    /// dùng đúng ID cũ, không tạo thêm hồ sơ trùng.
+    public var pendingProfileId: UUID? = nil
 
     public var effectiveRegion: HomeRegion {
         nation == .vietnam ? (homeRegion ?? .national) : .national

@@ -22,7 +22,8 @@ struct Stage5TasteSummaryFeature {
   @ObservableState
   struct State: Equatable {
     var draft: OnboardingDraft
-    let profileId: String
+    /// Hồ sơ đã có trên server (chưa onboarding xong) → patch. `nil` → tạo hồ sơ mới.
+    let existingProfileId: String?
     var tasteWeight: TasteVector
     var tasteSource: TasteSource
     var isEditingTaste = false
@@ -33,10 +34,10 @@ struct Stage5TasteSummaryFeature {
 
     init(
       draft: OnboardingDraft,
-      profileId: String = OnboardingMapper.defaultProfileId
+      existingProfileId: String? = nil
     ) {
       self.draft = draft
-      self.profileId = profileId
+      self.existingProfileId = existingProfileId
       self.tasteWeight = draft.tasteResult?.tasteWeight ?? .default
       self.tasteSource = draft.tasteResult?.source ?? .region
     }
@@ -119,12 +120,13 @@ struct Stage5TasteSummaryFeature {
     case toggleEditTasteTapped
     case tasteValueChanged(TasteDimension, Double)
     case finishButtonTapped
-    case completeOnboardingResponse(Result<Bool, EquatableError>)
+    /// Thành công trả về `profile_id` của hồ sơ đã lưu.
+    case completeOnboardingResponse(Result<String, EquatableError>)
     case delegate(Delegate)
 
     @CasePathable
     enum Delegate: Equatable {
-      case completed(finalDraft: OnboardingDraft)
+      case completed(finalDraft: OnboardingDraft, profileId: String)
     }
   }
 
@@ -173,13 +175,13 @@ struct Stage5TasteSummaryFeature {
         state.draft.step = 5
 
         let finalDraft = state.draft
-        let profileId = state.profileId
+        let existingProfileId = state.existingProfileId
         let supabaseClient = self.onboardingSupabaseClient
 
         return .run { send in
           do {
-            try await supabaseClient.completeOnboarding(finalDraft, profileId)
-            await send(.completeOnboardingResponse(.success(true)))
+            let savedProfileId = try await supabaseClient.completeOnboarding(finalDraft, existingProfileId)
+            await send(.completeOnboardingResponse(.success(savedProfileId)))
           } catch {
             await send(
               .completeOnboardingResponse(
@@ -189,10 +191,10 @@ struct Stage5TasteSummaryFeature {
           }
         }
 
-      case .completeOnboardingResponse(.success):
+      case let .completeOnboardingResponse(.success(savedProfileId)):
         state.isSubmitting = false
         state.errorMessage = nil
-        return .send(.delegate(.completed(finalDraft: state.draft)))
+        return .send(.delegate(.completed(finalDraft: state.draft, profileId: savedProfileId)))
 
       case let .completeOnboardingResponse(.failure(error)):
         state.isSubmitting = false

@@ -37,9 +37,11 @@ public struct TasteResult: Codable, Equatable, Sendable {
     public let dislikedDishIds: [String]
 }
 
-public struct UserProfile: Equatable, Identifiable, Sendable {
+public struct UserProfile: Codable, Equatable, Identifiable, Sendable {
     public var id: String { profileId }
-    public let profileId: String
+    /// UUID (chuỗi thường) của dòng `user_profiles`, hoặc `OnboardingMapper.defaultProfileId`
+    /// khi hồ sơ chưa tồn tại trên server.
+    public var profileId: String
     public var displayName: String
     public var gender: Gender?
     public var birthYear: Int?
@@ -52,6 +54,8 @@ public struct UserProfile: Equatable, Identifiable, Sendable {
     public var dislikedDishIds: [String]
     public var onboardingVersion: Int?
     public var onboardingCompletedAt: Date?
+    /// `true` khi hồ sơ đã có dòng trong `user_profiles`.
+    public var isPersisted: Bool = true
 
     public var needsOnboarding: Bool { onboardingCompletedAt == nil }
 }
