@@ -20,11 +20,16 @@ public struct LocalClient: Sendable {
     public var loadStartupProfile: @Sendable (_ userId: UUID) -> UserProfile?
     /// Cache hồ sơ khởi động của `userId` sau khi tải từ server hoặc hoàn tất onboarding.
     public var saveStartupProfile: @Sendable (_ profile: UserProfile, _ userId: UUID) -> Void
+    /// Danh sách tối đa 3 `dish_id` gần nhất để gửi vào `recent_dish_ids` của `/api/v1/recommend`.
+    public var loadRecentDishIds: @Sendable () -> [String] = { [] }
+    /// Lưu danh sách `recent_dish_ids` (tự cắt tối đa 3 phần tử mới nhất).
+    public var saveRecentDishIds: @Sendable (_ dishIds: [String]) -> Void = { _ in }
 }
 
 extension LocalClient: DependencyKey {
     private static let keyPrefix = "dailymate.onboarding.draft"
     private static let startupProfileKeyPrefix = "dailymate.startup.profile"
+    private static let recentDishIdsKey = "dailymate.recommend.recentDishIds"
 
     private static func startupProfileKey(userId: UUID) -> String {
         "\(startupProfileKeyPrefix).\(userId.uuidString.lowercased())"
@@ -75,6 +80,15 @@ extension LocalClient: DependencyKey {
                 let defaults = suiteName.flatMap(UserDefaults.init(suiteName:)) ?? .standard
                 guard let data = try? encoder.encode(profile) else { return }
                 defaults.set(data, forKey: startupProfileKey(userId: userId))
+            },
+            loadRecentDishIds: {
+                let defaults = suiteName.flatMap(UserDefaults.init(suiteName:)) ?? .standard
+                return defaults.stringArray(forKey: recentDishIdsKey) ?? []
+            },
+            saveRecentDishIds: { dishIds in
+                let defaults = suiteName.flatMap(UserDefaults.init(suiteName:)) ?? .standard
+                let trimmed = Array(dishIds.prefix(3))
+                defaults.set(trimmed, forKey: recentDishIdsKey)
             }
         )
     }
@@ -82,6 +96,7 @@ extension LocalClient: DependencyKey {
     public static var previewValue: Self {
         let storage = LockIsolated<[String: OnboardingDraft]>([:])
         let profiles = LockIsolated<[UUID: UserProfile]>([:])
+        let recentDishes = LockIsolated<[String]>([])
         return Self(
             loadDraft: { userId, profileId in
                 storage.value[storageKey(userId: userId, profileId: profileId)]
@@ -101,6 +116,12 @@ extension LocalClient: DependencyKey {
             },
             saveStartupProfile: { profile, userId in
                 profiles.withValue { $0[userId] = profile }
+            },
+            loadRecentDishIds: {
+                recentDishes.value
+            },
+            saveRecentDishIds: { dishIds in
+                recentDishes.setValue(Array(dishIds.prefix(3)))
             }
         )
     }

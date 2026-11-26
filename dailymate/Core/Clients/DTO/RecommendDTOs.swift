@@ -308,3 +308,144 @@ public struct SuggestReasonDTO: Equatable, Decodable, Sendable {
         self.label = try container.decodeIfPresent(String.self, forKey: .label) ?? ""
     }
 }
+
+// MARK: - Response cho POST /api/v1/recommend
+
+public struct RecommendResponseDTO: Equatable, Decodable, Sendable {
+    public let rankedDishes: [RankedDishDTO]
+    public let page: Int?
+    public let totalPages: Int?
+    public let hasNextPage: Bool
+    public let totalDishes: Int?
+    public let basketWarning: BasketWarningDTO?
+    public let relaxedFilters: [String]
+
+    public init(
+        rankedDishes: [RankedDishDTO] = [],
+        page: Int? = nil,
+        totalPages: Int? = nil,
+        hasNextPage: Bool = false,
+        totalDishes: Int? = nil,
+        basketWarning: BasketWarningDTO? = nil,
+        relaxedFilters: [String] = []
+    ) {
+        self.rankedDishes = rankedDishes
+        self.page = page
+        self.totalPages = totalPages
+        self.hasNextPage = hasNextPage
+        self.totalDishes = totalDishes
+        self.basketWarning = basketWarning
+        self.relaxedFilters = relaxedFilters
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case page
+        case rankedDishes   = "ranked_dishes"
+        case totalPages     = "total_pages"
+        case hasNextPage    = "has_next_page"
+        case totalDishes    = "total_dishes"
+        case basketWarning  = "basket_warning"
+        case relaxedFilters = "relaxed_filters"
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.rankedDishes = try container.decodeIfPresent([RankedDishDTO].self, forKey: .rankedDishes) ?? []
+        self.page = try container.decodeIfPresent(Int.self, forKey: .page)
+        self.totalPages = try container.decodeIfPresent(Int.self, forKey: .totalPages)
+        self.hasNextPage = try container.decodeIfPresent(Bool.self, forKey: .hasNextPage) ?? false
+        self.totalDishes = try container.decodeIfPresent(Int.self, forKey: .totalDishes)
+        self.basketWarning = try container.decodeIfPresent(BasketWarningDTO.self, forKey: .basketWarning)
+        self.relaxedFilters = try container.decodeIfPresent([String].self, forKey: .relaxedFilters) ?? []
+    }
+}
+
+public struct BasketWarningDTO: Equatable, Decodable, Sendable {
+    public let count: Int
+
+    public init(count: Int = 0) {
+        self.count = count
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case count
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.count = try container.decodeIfPresent(Int.self, forKey: .count) ?? 0
+    }
+}
+
+public struct RankedDishDTO: Equatable, Decodable, Identifiable, Sendable {
+    public var id: String { dishId }
+    public let dishId: String
+    public let rank: Int?
+    public let finalScore: Double?
+    public let matchPct: Double?
+    public let title: String
+    public let imageUrl: String?
+    public let nation: String?
+    public let cookTimeMin: Int?
+    public let estCostVnd: Double?
+    public let estCostLevel: Int?
+
+    public var imageURL: URL? {
+        imageUrl.flatMap(URL.init(string:))
+    }
+
+    public init(
+        dishId: String,
+        rank: Int? = nil,
+        finalScore: Double? = nil,
+        matchPct: Double? = nil,
+        title: String = "",
+        imageUrl: String? = nil,
+        nation: String? = nil,
+        cookTimeMin: Int? = nil,
+        estCostVnd: Double? = nil,
+        estCostLevel: Int? = nil
+    ) {
+        self.dishId = dishId
+        self.rank = rank
+        self.finalScore = finalScore
+        self.matchPct = matchPct
+        self.title = title
+        self.imageUrl = imageUrl
+        self.nation = nation
+        self.cookTimeMin = cookTimeMin
+        self.estCostVnd = estCostVnd
+        self.estCostLevel = estCostLevel
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case rank, title, nation
+        case dishId       = "dish_id"
+        case finalScore   = "final_score"
+        case matchPct     = "match_pct"
+        case imageUrl     = "image_url"
+        case cookTimeMin  = "cook_time_min"
+        case estCostVnd   = "est_cost_vnd"
+        case estCostLevel = "est_cost_level"
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        if let stringId = try? container.decode(String.self, forKey: .dishId) {
+            self.dishId = stringId
+        } else if let intId = try? container.decode(Int.self, forKey: .dishId) {
+            self.dishId = String(intId)
+        } else {
+            self.dishId = ""
+        }
+        self.rank = try container.decodeIfPresent(Int.self, forKey: .rank)
+        self.finalScore = try container.decodeIfPresent(Double.self, forKey: .finalScore)
+        self.matchPct = try container.decodeIfPresent(Double.self, forKey: .matchPct)
+        self.title = try container.decodeIfPresent(String.self, forKey: .title) ?? ""
+        self.imageUrl = try container.decodeIfPresent(String.self, forKey: .imageUrl)
+        self.nation = try container.decodeIfPresent(String.self, forKey: .nation)
+        self.cookTimeMin = try container.decodeIfPresent(Int.self, forKey: .cookTimeMin)
+        self.estCostVnd = try container.decodeIfPresent(Double.self, forKey: .estCostVnd)
+        self.estCostLevel = try container.decodeIfPresent(Int.self, forKey: .estCostLevel)
+    }
+}
