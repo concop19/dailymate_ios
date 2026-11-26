@@ -12,6 +12,10 @@ public struct AllergyItem: Codable, Equatable, Identifiable, Sendable {
     public let id: Int
     public let name: String
     public let group: AllergyGroup?
+
+    public var imageUrl : URL? {
+        return URL(string: "https://raw.githubusercontent.com/concop19/daily-mate-assets/main/ingredients/icon/ingredient_\(id).webp")
+    }
 }
 
 public struct BodyMetrics: Codable, Equatable, Sendable {

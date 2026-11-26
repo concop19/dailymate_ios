@@ -14,7 +14,7 @@ struct Stage1PersonalFeature {
   @ObservableState
   struct State: Equatable {
     var gender: Gender?
-    var birthYearText: String
+    var birthYear: Int?
     var heightCm: Double
     var weightKg: Double
     /// Bật sau khi bấm "Tiếp tục" lần đầu để hiển thị lỗi các trường còn thiếu.
@@ -22,6 +22,7 @@ struct Stage1PersonalFeature {
     var shakeTrigger = 0
     let currentYear: Int
 
+    var birthYearOptions: [Int] { Array((minBirthYear...maxBirthYear).reversed()) }
     static let heightRange: ClosedRange<Double> = 100...220
     static let weightRange: ClosedRange<Double> = 15...150
 
@@ -33,10 +34,10 @@ struct Stage1PersonalFeature {
       currentYear: Int = Calendar(identifier: .gregorian).component(.year, from: Date())
     ) {
       self.gender = gender
-      self.birthYearText = birthYear.map(String.init) ?? ""
+      self.currentYear = currentYear
+      self.birthYear = birthYear.flatMap { (currentYear - 110...currentYear - 4).contains($0) ? $0 : nil }
       self.heightCm = min(max(heightCm, Self.heightRange.lowerBound), Self.heightRange.upperBound)
       self.weightKg = min(max(weightKg, Self.weightRange.lowerBound), Self.weightRange.upperBound)
-      self.currentYear = currentYear
     }
 
     /// Khôi phục từ bản nháp đã lưu trong LocalClient.
@@ -55,22 +56,8 @@ struct Stage1PersonalFeature {
     var minBirthYear: Int { currentYear - 110 }
     var maxBirthYear: Int { currentYear - 4 }
 
-    var birthYear: Int? {
-      guard birthYearText.count == 4, let year = Int(birthYearText),
-            (minBirthYear...maxBirthYear).contains(year) else { return nil }
-      return year
-    }
-
     var birthYearError: String? {
-      if birthYearText.isEmpty {
-        return showsValidation ? "Vui lòng nhập năm sinh" : nil
-      }
-      guard birthYearText.count == 4, let year = Int(birthYearText) else {
-        return showsValidation ? "Năm sinh gồm 4 chữ số" : nil
-      }
-      if year < minBirthYear { return "Năm sinh phải từ \(minBirthYear) trở về sau" }
-      if year > maxBirthYear { return "Năm sinh không được sau \(maxBirthYear)" }
-      return nil
+      showsValidation && birthYear == nil ? "Vui lòng chọn năm sinh" : nil
     }
 
     var genderError: String? {
@@ -86,7 +73,7 @@ struct Stage1PersonalFeature {
 
   enum Action: Equatable {
     case genderSelected(Gender)
-    case birthYearChanged(String)
+    case birthYearSelect(Int)
     case heightChanged(Double)
     case weightChanged(Double)
     case continueButtonTapped
@@ -105,9 +92,13 @@ struct Stage1PersonalFeature {
         state.gender = gender
         return .none
 
-      case let .birthYearChanged(text):
-        // Chỉ giữ chữ số, tối đa 4 ký tự.
-        state.birthYearText = String(text.filter(\.isWholeNumber).prefix(4))
+      case let .birthYearSelect(year):
+        guard (state.minBirthYear...state.maxBirthYear).contains(year) else {
+          state.birthYear = nil
+          state.showsValidation = true
+          return .none
+        }
+        state.birthYear = year
         return .none
 
       case let .heightChanged(value):

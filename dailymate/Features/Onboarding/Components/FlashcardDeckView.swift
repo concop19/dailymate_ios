@@ -38,14 +38,7 @@ struct FlashcardDeckView: View {
   var body: some View {
     VStack(spacing: 0) {
       // Mascot Lottie ngồi ngay trên đỉnh thẻ như trong stage4.jpg
-      LottieView(animation: .named(mascotAnimationName))
-        .playing(loopMode: .loop)
-        .resizable()
-        .scaledToFit()
-        .frame(width: 78, height: 78)
-        .padding(.bottom, -16)
-        .zIndex(2)
-        .accessibilityHidden(true)
+     
 
       ZStack {
         if let nextCard {

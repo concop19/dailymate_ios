@@ -10,25 +10,57 @@ import SwiftUI
 /// Thẻ chọn dạng hàng ngang (icon + tiêu đề + mô tả + nút radio tròn)
 /// dùng cho Vùng miền (Stage 2) và Chế độ ăn (Stage 3).
 struct OnboardingRadioRow: View {
-  let emoji: String
+ 
   let title: String
   let subtitle: String
   let isSelected: Bool
   let action: () -> Void
-
+     enum Icon {
+      case emoji(String)
+      case image(String)
+    }
+    var iconType : Icon
+    
   private let shape = RoundedRectangle(cornerRadius: 22, style: .continuous)
-
+    init(emoji: String, title: String, subtitle: String, isSelected: Bool, action: @escaping () -> Void) {
+        
+        self.title = title
+        self.subtitle = subtitle
+        self.isSelected = isSelected
+        self.action = action
+        self.iconType = .emoji(emoji)
+       
+    }
+    init(image: String, title: String, subtitle: String, isSelected: Bool, action: @escaping () -> Void) {
+        
+        self.title = title
+        self.subtitle = subtitle
+        self.isSelected = isSelected
+        self.action = action
+        self.iconType = .image(image)
+    
+    }
   var body: some View {
     Button(action: action) {
       HStack(alignment: .center, spacing: 14) {
-        Text(emoji)
-          .font(.system(size: 26))
-          .frame(width: 48, height: 48)
-          .background(
-            Color.Ghibli.straw.opacity(0.18),
-            in: RoundedRectangle(cornerRadius: 14, style: .continuous)
-          )
-
+          switch iconType {
+          case let .emoji(emoji):
+              Text(emoji)
+                  .font(.system(size: 26))
+                  .frame(width: 48, height: 48)
+                  .background(
+                    Color.Ghibli.straw.opacity(0.18),
+                    in: RoundedRectangle(cornerRadius: 14, style: .continuous)
+                  )
+          case let .image(image):
+              Image(image)
+                  .resizable()
+                  .scaledToFit()
+                  .frame(width: 48, height: 48)
+                  .background(Color.Ghibli.straw.opacity(0.18),
+                              in: RoundedRectangle(cornerRadius: 14,style : .continuous))
+                  .clipShape(RoundedRectangle(cornerRadius: 14,style: .continuous))
+          }
         VStack(alignment: .leading, spacing: 4) {
           Text(title)
             .font(.system(.title3, design: .serif, weight: .bold))

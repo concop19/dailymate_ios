@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "icon_profile_allergy_food.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

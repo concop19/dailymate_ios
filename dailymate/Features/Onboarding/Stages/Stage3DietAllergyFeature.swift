@@ -355,9 +355,9 @@ extension DietType {
 
   var displayEmoji: String {
     switch self {
-    case .omnivore: "🍖"
-    case .vegetarian: "🥚"
-    case .vegan: "🌱"
+    case .omnivore: "man"
+    case .vegetarian: "chay"
+    case .vegan: "thuan_chay"
     }
   }
 }
@@ -369,6 +369,7 @@ extension AllergyGroup {
     case .fish: "Cá"
     case .beef: "Thịt bò"
     case .pork: "Thịt heo"
+    case .poultry: "gia cầm"
     case .legumeNut: "Đậu & hạt"
     case .dairyEgg: "Sữa & trứng"
     case .vegetable: "Rau củ"
@@ -386,6 +387,7 @@ extension AllergyGroup {
     case .fish: "🐟"
     case .beef: "🐄"
     case .pork: "🐖"
+    case .poultry: "🐔"
     case .legumeNut: "🥜"
     case .dairyEgg: "🥛"
     case .vegetable: "🥬"
@@ -400,6 +402,7 @@ extension AllergyGroup {
     case .beef: "thịt bò, gân bò..."
     case .pork: "thịt ba chỉ, sườn..."
     case .legumeNut: "đậu phộng, mè..."
+    case .poultry : "chicken"
     case .dairyEgg: "trứng gà, sữa tươi..."
     case .vegetable: "cà tím, măng..."
     case .gluten: "bột mì, mì sợi..."

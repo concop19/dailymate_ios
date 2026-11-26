@@ -14,63 +14,75 @@ import Testing
 struct AnimationPlanTests {
   private let year = 2026
 
-  @Test("Chưa nhập năm sinh → kitten / tabby-girl")
+  @Test("Chưa nhập năm sinh → kitten / tabby_girl")
   func noBirthYear() {
     #expect(AnimationPlan.resolve(gender: nil, birthYear: nil, currentYear: year) == .kitten)
     #expect(AnimationPlan.resolve(gender: .male, birthYear: nil, currentYear: year) == .kitten)
     #expect(AnimationPlan.resolve(gender: .female, birthYear: nil, currentYear: year) == .tabbyGirl)
   }
 
-  @Test("Ánh xạ đủ 8 avatar theo nhóm tuổi")
+  @Test("Ánh xạ đủ 18 avatar theo 2 giới tính & 8 nhóm tuổi")
   func allGroups() {
     let cases: [(Gender?, Int, AnimationPlan)] = [
-      (.male, 2016, .kitten), (.female, 2016, .tabbyGirl),
-      (.male, 2000, .brother), (.female, 2000, .sister),
-      (.male, 1985, .father), (.female, 1985, .mother),
-      (.male, 1960, .grandpa), (.female, 1960, .grandma),
-      (nil, 1985, .kitten),
+      (.male, 2022, .boyToddlerBong), (.female, 2022, .girlToddlerSua),
+      (.male, 2016, .boyChildButChi), (.female, 2016, .girlChildNo),
+      (.male, 2010, .boyYouthBeat),   (.female, 2010, .girlYouthMay),
+      (.male, 2000, .brother),        (.female, 2000, .sister),
+      (.male, 1990, .manAdultMoka),   (.female, 1990, .womanAdultLa),
+      (.male, 1975, .father),         (.female, 1975, .mother),
+      (.male, 1960, .manSeniorTra),   (.female, 1960, .womanSeniorMai),
+      (.male, 1945, .grandpa),        (.female, 1945, .grandma),
+      (nil, 1990, .kitten),
     ]
     for (gender, birthYear, expected) in cases {
       #expect(AnimationPlan.resolve(gender: gender, birthYear: birthYear, currentYear: year) == expected)
     }
   }
 
-  @Test("Ngưỡng biên 12/13, 29/30, 54/55")
+  @Test("Ngưỡng biên 5/6, 12/13, 18/19, 29/30, 44/45, 59/60, 74/75")
   func boundaries() {
-    #expect(AnimationPlan.resolve(gender: .male, birthYear: year - 12, currentYear: year) == .kitten)
-    #expect(AnimationPlan.resolve(gender: .male, birthYear: year - 13, currentYear: year) == .brother)
+    #expect(AnimationPlan.resolve(gender: .male, birthYear: year - 5, currentYear: year) == .boyToddlerBong)
+    #expect(AnimationPlan.resolve(gender: .male, birthYear: year - 6, currentYear: year) == .boyChildButChi)
+    #expect(AnimationPlan.resolve(gender: .female, birthYear: year - 12, currentYear: year) == .girlChildNo)
+    #expect(AnimationPlan.resolve(gender: .female, birthYear: year - 13, currentYear: year) == .girlYouthMay)
+    #expect(AnimationPlan.resolve(gender: .male, birthYear: year - 18, currentYear: year) == .boyYouthBeat)
+    #expect(AnimationPlan.resolve(gender: .male, birthYear: year - 19, currentYear: year) == .brother)
     #expect(AnimationPlan.resolve(gender: .female, birthYear: year - 29, currentYear: year) == .sister)
-    #expect(AnimationPlan.resolve(gender: .female, birthYear: year - 30, currentYear: year) == .mother)
-    #expect(AnimationPlan.resolve(gender: .male, birthYear: year - 54, currentYear: year) == .father)
-    #expect(AnimationPlan.resolve(gender: .male, birthYear: year - 55, currentYear: year) == .grandpa)
+    #expect(AnimationPlan.resolve(gender: .female, birthYear: year - 30, currentYear: year) == .womanAdultLa)
+    #expect(AnimationPlan.resolve(gender: .male, birthYear: year - 44, currentYear: year) == .manAdultMoka)
+    #expect(AnimationPlan.resolve(gender: .male, birthYear: year - 45, currentYear: year) == .father)
+    #expect(AnimationPlan.resolve(gender: .female, birthYear: year - 59, currentYear: year) == .mother)
+    #expect(AnimationPlan.resolve(gender: .female, birthYear: year - 60, currentYear: year) == .womanSeniorMai)
+    #expect(AnimationPlan.resolve(gender: .male, birthYear: year - 74, currentYear: year) == .manSeniorTra)
+    #expect(AnimationPlan.resolve(gender: .male, birthYear: year - 75, currentYear: year) == .grandpa)
   }
 }
 
 @MainActor
 @Suite("Onboarding — Stage 1")
 struct OnboardingStage1Tests {
-  @Test("Năm sinh: lọc chữ số, tối đa 4 ký tự và kiểm tra khoảng hợp lệ")
+  @Test("Năm sinh: chỉ nhận giá trị trong khoảng hợp lệ minBirthYear...maxBirthYear")
   func birthYearValidation() async {
     let store = TestStore(initialState: Stage1PersonalFeature.State(currentYear: 2026)) {
       Stage1PersonalFeature()
     }
 
-    await store.send(.birthYearChanged("20a15x9")) {
-      $0.birthYearText = "2015"
+    await store.send(.birthYearSelect(2015)) {
+      $0.birthYear = 2015
     }
     #expect(store.state.birthYear == 2015)
     #expect(store.state.birthYearError == nil)
 
-    await store.send(.birthYearChanged("1800")) {
-      $0.birthYearText = "1800"
+    await store.send(.birthYearSelect(1800)) {
+      $0.birthYear = nil
+      $0.showsValidation = true
     }
     #expect(store.state.birthYear == nil)
     #expect(store.state.birthYearError != nil)
 
-    await store.send(.birthYearChanged("2025")) {
-      $0.birthYearText = "2025"
-    }
+    await store.send(.birthYearSelect(2025))
     #expect(store.state.birthYear == nil) // < 4 tuổi
+    #expect(store.state.birthYearError != nil)
   }
 
   @Test("Bấm Tiếp tục khi thiếu dữ liệu → bật validation, không gửi delegate")
@@ -112,8 +124,8 @@ struct OnboardingStage1Tests {
     await store.send(.stage1(.genderSelected(.male))) {
       $0.stage1.gender = .male
     }
-    await store.send(.stage1(.birthYearChanged("2015"))) {
-      $0.stage1.birthYearText = "2015"
+    await store.send(.stage1(.birthYearSelect(2015))) {
+      $0.stage1.birthYear = 2015
     }
     await store.send(.stage1(.heightChanged(151))) {
       $0.stage1.heightCm = 151

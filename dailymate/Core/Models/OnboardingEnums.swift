@@ -24,6 +24,7 @@ public enum DietType: String, Codable, Sendable, CaseIterable {
     case omnivore, vegetarian, vegan
 }
 
+
 public enum AllergyGroup: String, Codable, Sendable, CaseIterable, Hashable {
     case seafood
     case fish
@@ -31,9 +32,21 @@ public enum AllergyGroup: String, Codable, Sendable, CaseIterable, Hashable {
     case pork
     case legumeNut = "legume_nut"
     case dairyEgg  = "dairy_egg"
+    case poultry
     case vegetable
     case gluten
 }
+/*export const ALLERGY_OPTIONS = [
+ { key: 'seafood',    emoji: '🦐' },
+ { key: 'fish',       emoji: '🐟' },
+ { key: 'beef',       emoji: '🐄' },
+ { key: 'pork',       emoji: '🐖' },
+ { key: 'poultry',    emoji: '🐔' },
+ { key: 'legume_nut', emoji: '🥜' },
+ { key: 'dairy_egg',  emoji: '🥚' },
+ { key: 'vegetable',  emoji: '🥬' },
+ { key: 'gluten',     emoji: '🌾' },
+]*/
 
 public enum SwipeVote: String, Codable, Sendable {
     case like, neutral, dislike

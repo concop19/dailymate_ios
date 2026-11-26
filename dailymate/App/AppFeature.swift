@@ -61,6 +61,7 @@ struct AppFeature {
                 guard let userId else {
                     state.onboarding = nil
                     state.isLoadingProfile = false
+                    state.home.profile = nil
                     return .cancel(id: CancelID.startupProfile)
                 }
 
@@ -69,6 +70,7 @@ struct AppFeature {
                 if let cached = localClient.loadStartupProfile(userId), !cached.needsOnboarding {
                     state.isLoadingProfile = false
                     state.onboarding = nil
+                    state.home.profile = cached
                 } else {
                     state.isLoadingProfile = true
                 }
@@ -106,6 +108,7 @@ struct AppFeature {
                 if let userId = state.onboarding?.userId {
                     localClient.saveStartupProfile(profile, userId)
                 }
+                state.home.profile = profile
                 state.onboarding = nil
                 return .none
 
@@ -125,6 +128,7 @@ struct AppFeature {
     /// Hiển thị Home hoặc Onboarding theo hồ sơ khởi động.
     /// Nếu user đang làm onboarding dở thì giữ nguyên màn hiện tại khi bootstrap nền trả về.
     private func applyStartupProfile(_ profile: UserProfile, userId: UUID, state: inout State) {
+        state.home.profile = profile
         guard profile.needsOnboarding else {
             state.onboarding = nil
             return

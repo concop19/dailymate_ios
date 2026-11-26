@@ -11,7 +11,6 @@ import SwiftUI
 
 struct Stage1PersonalView: View {
   @Bindable var store: StoreOf<Stage1PersonalFeature>
-  @FocusState private var isBirthYearFocused: Bool
 
   var body: some View {
     ScrollView {
@@ -23,21 +22,17 @@ struct Stage1PersonalView: View {
         heightSection
         weightSection
       }
-      .padding(.horizontal, 24)
-      .padding(.top, 8)
-      .padding(.bottom, 24)
+      .padding(.horizontal, 24) // lề trái phải
+      .padding(.top, 8) // lề trên
+      .padding(.bottom, 24) // lề dưới
     }
-    .scrollIndicators(.hidden)
-    .scrollDismissesKeyboard(.interactively)
+    .scrollIndicators(.hidden) // ẩn chỉ thanh cuộn
     .safeAreaInset(edge: .bottom) { continueBar }
+      // fixed area dù cuônj thì thàn phần này vẫn ko bị cuon di
     .background { OnboardingBackground() }
+      // đặt background vstack này là onboardng backgroudn
     .toolbar(.hidden, for: .navigationBar)
-    .toolbar {
-      ToolbarItemGroup(placement: .keyboard) {
-        Spacer()
-        Button("Xong") { isBirthYearFocused = false }
-      }
-    }
+      // ẩn thanh navigationBar mặc định của hệ thống
   }
 
   // MARK: - Header
@@ -105,17 +100,36 @@ struct Stage1PersonalView: View {
     VStack(alignment: .leading, spacing: 10) {
       OnboardingSectionLabel("Năm sinh *")
 
-      TextField(
-        "Năm sinh",
-        text: $store.birthYearText.sending(\.birthYearChanged),
-        prompt: ghibliPrompt("VD: \(store.currentYear - 25)")
-      )
-      .keyboardType(.numberPad)
-      .focused($isBirthYearFocused)
-      .ghibliInputContainer(isFocused: isBirthYearFocused)
-      .overlay {
-        if store.birthYearError != nil {
-          RoundedRectangle(cornerRadius: 14).strokeBorder(Color.red.opacity(0.6), lineWidth: 1.5)
+      Menu {
+        ForEach(store.birthYearOptions, id: \.self) { year in
+          Button {
+            store.send(.birthYearSelect(year))
+          } label: {
+            if store.birthYear == year {
+              Label(String(year), systemImage: "checkmark")
+            } else {
+              Text(String(year))
+            }
+          }
+        }
+      } label: {
+        HStack {
+          Text(store.birthYear.map(String.init) ?? "Chọn năm sinh")
+            .foregroundStyle(
+              store.birthYear == nil ? Color.Ghibli.inkMuted : Color.Ghibli.inkDark
+            )
+          Spacer()
+          Image(systemName: "chevron.down")
+            .font(.caption.weight(.semibold))
+            .foregroundStyle(Color.Ghibli.inkMuted)
+        }
+        .frame(maxWidth: .infinity)
+        .ghibliInputContainer(isFocused: false)
+        .overlay {
+          if store.birthYearError != nil {
+            RoundedRectangle(cornerRadius: 14)
+              .strokeBorder(Color.red.opacity(0.6), lineWidth: 1.5)
+          }
         }
       }
 
@@ -153,7 +167,8 @@ struct Stage1PersonalView: View {
         step: 0.5,
         majorEvery: 10,
         unit: "kg",
-        fractionDigits: 1
+        fractionDigits: 1,
+        style: .curved
       )
       BMISummaryBadgeView(heightCm: store.heightCm, weightKg: store.weightKg)
         .padding(.top, 8)
@@ -164,7 +179,6 @@ struct Stage1PersonalView: View {
 
   private var continueBar: some View {
     GhibliPrimaryButton(title: "Tiếp tục →", color: Color.Ghibli.wood) {
-      isBirthYearFocused = false
       store.send(.continueButtonTapped)
     }
     .opacity(store.canContinue ? 1 : 0.75)

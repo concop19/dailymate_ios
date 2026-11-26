@@ -83,7 +83,7 @@ struct Stage2RegionView: View {
       VStack(spacing: 12) {
         ForEach(Stage2RegionFeature.State.vietnameseRegions, id: \.self) { region in
           OnboardingRadioRow(
-            emoji: region.displayEmoji,
+            image: region.displayEmoji,
             title: region.displayTitle,
             subtitle: region.displaySubtitle,
             isSelected: store.homeRegion == region
