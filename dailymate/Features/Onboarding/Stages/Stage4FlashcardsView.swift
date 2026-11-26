@@ -35,7 +35,7 @@ struct Stage4FlashcardsView: View {
     .padding(.top, 8)
     .padding(.bottom, 12)
     .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .safeAreaInset(edge: .bottom) { skipBar }
+   
     .background { OnboardingBackground() }
     .toolbar(.hidden, for: .navigationBar)
     .onAppear {
@@ -51,11 +51,12 @@ struct Stage4FlashcardsView: View {
         .font(.system(.largeTitle, design: .serif, weight: .bold))
         .foregroundStyle(Color.Ghibli.inkDark)
         .fixedSize(horizontal: false, vertical: true)
-
-      Text("Quẹt phải nếu thích, trái nếu không, lên nếu bình thường.")
-        .font(.body)
-        .foregroundStyle(Color.Ghibli.inkBody)
-        .fixedSize(horizontal: false, vertical: true)
+        MascotBanner(
+          message: "Quẹt phải nếu thích, trái nếu không, lên nếu bình thường.",
+          animationName: "Cat typing",
+          mascotSize: 88
+        )
+      
     }
   }
 
@@ -127,24 +128,7 @@ struct Stage4FlashcardsView: View {
 
   // MARK: - Bottom Skip Link
 
-  private var skipBar: some View {
-    Button {
-      store.send(.skipToRegionTasteTapped)
-    } label: {
-      Text("Bỏ qua, dùng khẩu vị theo vùng miền")
-        .font(.subheadline.weight(.semibold))
-        .foregroundStyle(Color.Ghibli.inkBody)
-        .underline()
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 12)
-    }
-    .disabled(store.isLoadingCards || store.isComputingTaste)
-    .opacity(store.isLoadingCards || store.isComputingTaste ? 0.5 : 1)
-    .background(Color.Ghibli.cream.opacity(0.95))
-    .overlay(alignment: .top) {
-      Rectangle().fill(Color.Ghibli.straw.opacity(0.25)).frame(height: 1)
-    }
-  }
+  
 }
 
 #Preview {

@@ -137,9 +137,9 @@ extension HomeRegion {
 
   var displayEmoji: String {
     switch self {
-    case .northern: "🏞️"
-    case .central: "🌶️"
-    case .southern: "🥥"
+    case .northern: "bac"
+    case .central: "trung"
+    case .southern: "nam"
     case .national: "🌏"
     }
   }

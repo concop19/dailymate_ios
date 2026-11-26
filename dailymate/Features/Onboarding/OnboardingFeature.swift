@@ -57,12 +57,14 @@ struct OnboardingFeature {
     case delegate(Delegate)
 
     enum Delegate: Equatable {
-      case completed
+      /// Hồ sơ đã lưu lên Supabase (đã có `profileId` thật).
+      case completed(UserProfile)
     }
   }
 
   @Dependency(\.localClient) var localClient
   @Dependency(\.date.now) var now
+  @Dependency(\.uuid) var uuid
 
   var body: some Reducer<State, Action> {
     Scope(state: \.stage1, action: \.stage1) {
@@ -136,30 +138,39 @@ struct OnboardingFeature {
         state.profile.tasteWeight = tasteResult.tasteWeight
         state.profile.likedDishIds = tasteResult.likedDishIds
         state.profile.dislikedDishIds = tasteResult.dislikedDishIds
+        // Sinh sẵn ID cho hồ sơ mới; được lưu cùng bản nháp để lần thử lại không tạo trùng.
+        if !state.profile.isPersisted, state.draft.pendingProfileId == nil {
+          state.draft.pendingProfileId = uuid()
+        }
 
         state.path.append(
           .stage5(
             Stage5TasteSummaryFeature.State(
               draft: state.draft,
-              profileId: state.profile.profileId
+              existingProfileId: state.profile.isPersisted ? state.profile.profileId : nil
             )
           )
         )
         return .none
 
-      case let .path(.element(id: _, action: .stage5(.delegate(.completed(finalDraft))))):
+      case let .path(.element(id: _, action: .stage5(.delegate(.completed(finalDraft, savedProfileId))))):
         state.isCompleted = true
         state.draft = finalDraft
+        // Bản nháp đang lưu dưới khoá của profileId cũ (có thể là khoá tạm) → xoá đúng khoá đó.
+        let draftKey = state.profile.profileId
+        state.profile.profileId = savedProfileId
+        state.profile.isPersisted = true
+        state.profile.dietType = finalDraft.dietType
         state.profile.tasteWeight = finalDraft.tasteResult?.tasteWeight ?? state.profile.tasteWeight
         state.profile.onboardingVersion = 1
         state.profile.onboardingCompletedAt = now
 
         let userId = state.userId
-        let profileId = state.profile.profileId
+        let profile = state.profile
         let localClient = self.localClient
         return .run { send in
-          localClient.clearDraft(userId, profileId)
-          await send(.delegate(.completed))
+          localClient.clearDraft(userId, draftKey)
+          await send(.delegate(.completed(profile)))
         }
 
       case .path:

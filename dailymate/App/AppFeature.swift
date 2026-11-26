@@ -13,7 +13,7 @@ struct AppFeature {
         /// Đang chờ sự kiện `initialSession` đầu tiên — hiển thị màn chờ để tránh nháy màn hình.
         var isCheckingSession = true
         var isAuthenticated = false
-        /// Đang tải hồ sơ khởi động từ Supabase sau khi đăng nhập.
+        /// Đang chờ `get_bootstrap()` khi máy chưa có hồ sơ cache (chỉ lần đầu trên máy này).
         var isLoadingProfile = false
     }
 
@@ -61,11 +61,19 @@ struct AppFeature {
                 guard let userId else {
                     state.onboarding = nil
                     state.isLoadingProfile = false
+                    state.home.profile = nil
                     return .cancel(id: CancelID.startupProfile)
                 }
 
-                // Đăng nhập → kiểm tra hồ sơ trên Supabase.
-                state.isLoadingProfile = true
+                // Đăng nhập → hiện ngay hồ sơ đã cache (nếu đã onboarding xong) rồi gọi
+                // `get_bootstrap()` ở nền. Chỉ chặn bằng màn chờ khi máy chưa có cache.
+                if let cached = localClient.loadStartupProfile(userId), !cached.needsOnboarding {
+                    state.isLoadingProfile = false
+                    state.onboarding = nil
+                    state.home.profile = cached
+                } else {
+                    state.isLoadingProfile = true
+                }
                 let supabaseClient = self.onboardingSupabaseClient
                 return .run { send in
                     do {
@@ -79,19 +87,28 @@ struct AppFeature {
 
             case let .startupProfileLoaded(userId, result):
                 state.isLoadingProfile = false
-                // Lỗi tải hồ sơ → fallback về profile meta mặc định (profileId = "default").
-                let profile = (try? result.get()) ?? OnboardingMapper.defaultStartupProfile()
-
-                guard profile.needsOnboarding else {
-                    state.onboarding = nil
-                    return .none
+                switch result {
+                case let .success(profile):
+                    if profile.isPersisted {
+                        localClient.saveStartupProfile(profile, userId)
+                    }
+                    applyStartupProfile(profile, userId: userId, state: &state)
+                case .failure:
+                    // Mất mạng / lỗi server: dùng cache nếu có. Không có cache thì vào Home
+                    // (không ép onboarding vì chưa chắc user là người mới); lần mở sau sẽ thử lại.
+                    if let cached = localClient.loadStartupProfile(userId) {
+                        applyStartupProfile(cached, userId: userId, state: &state)
+                    } else {
+                        state.onboarding = nil
+                    }
                 }
-                // Khôi phục bản nháp nếu user từng làm dở.
-                let draft = localClient.loadDraft(userId, profile.profileId) ?? OnboardingDraft()
-                state.onboarding = OnboardingFeature.State(userId: userId, profile: profile, draft: draft)
                 return .none
 
-            case .onboarding(.delegate(.completed)):
+            case let .onboarding(.delegate(.completed(profile))):
+                if let userId = state.onboarding?.userId {
+                    localClient.saveStartupProfile(profile, userId)
+                }
+                state.home.profile = profile
                 state.onboarding = nil
                 return .none
 
@@ -106,5 +123,19 @@ struct AppFeature {
         .ifLet(\.onboarding, action: \.onboarding) {
             OnboardingFeature()
         }
+    }
+
+    /// Hiển thị Home hoặc Onboarding theo hồ sơ khởi động.
+    /// Nếu user đang làm onboarding dở thì giữ nguyên màn hiện tại khi bootstrap nền trả về.
+    private func applyStartupProfile(_ profile: UserProfile, userId: UUID, state: inout State) {
+        state.home.profile = profile
+        guard profile.needsOnboarding else {
+            state.onboarding = nil
+            return
+        }
+        guard state.onboarding == nil else { return }
+        // Khôi phục bản nháp nếu user từng làm dở.
+        let draft = localClient.loadDraft(userId, profile.profileId) ?? OnboardingDraft()
+        state.onboarding = OnboardingFeature.State(userId: userId, profile: profile, draft: draft)
     }
 }

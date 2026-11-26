@@ -16,10 +16,19 @@ public struct LocalClient: Sendable {
     public var saveDraft: @Sendable (_ draft: OnboardingDraft, _ userId: UUID, _ profileId: String) -> Void
     /// Xoá bản nháp onboarding sau khi hoàn tất hoặc huỷ.
     public var clearDraft: @Sendable (_ userId: UUID, _ profileId: String) -> Void
+    /// Hồ sơ khởi động đã cache của `userId` (hiển thị ngay khi mở app, kể cả lúc mất mạng).
+    public var loadStartupProfile: @Sendable (_ userId: UUID) -> UserProfile?
+    /// Cache hồ sơ khởi động của `userId` sau khi tải từ server hoặc hoàn tất onboarding.
+    public var saveStartupProfile: @Sendable (_ profile: UserProfile, _ userId: UUID) -> Void
 }
 
 extension LocalClient: DependencyKey {
     private static let keyPrefix = "dailymate.onboarding.draft"
+    private static let startupProfileKeyPrefix = "dailymate.startup.profile"
+
+    private static func startupProfileKey(userId: UUID) -> String {
+        "\(startupProfileKeyPrefix).\(userId.uuidString.lowercased())"
+    }
 
     private static func storageKey(userId: UUID, profileId: String) -> String {
         "\(keyPrefix).\(userId.uuidString.lowercased()).\(profileId)"
@@ -56,12 +65,23 @@ extension LocalClient: DependencyKey {
                 let defaults = suiteName.flatMap(UserDefaults.init(suiteName:)) ?? .standard
                 let key = storageKey(userId: userId, profileId: profileId)
                 defaults.removeObject(forKey: key)
+            },
+            loadStartupProfile: { userId in
+                let defaults = suiteName.flatMap(UserDefaults.init(suiteName:)) ?? .standard
+                guard let data = defaults.data(forKey: startupProfileKey(userId: userId)) else { return nil }
+                return try? decoder.decode(UserProfile.self, from: data)
+            },
+            saveStartupProfile: { profile, userId in
+                let defaults = suiteName.flatMap(UserDefaults.init(suiteName:)) ?? .standard
+                guard let data = try? encoder.encode(profile) else { return }
+                defaults.set(data, forKey: startupProfileKey(userId: userId))
             }
         )
     }
 
     public static var previewValue: Self {
         let storage = LockIsolated<[String: OnboardingDraft]>([:])
+        let profiles = LockIsolated<[UUID: UserProfile]>([:])
         return Self(
             loadDraft: { userId, profileId in
                 storage.value[storageKey(userId: userId, profileId: profileId)]
@@ -75,6 +95,12 @@ extension LocalClient: DependencyKey {
                 storage.withValue {
                     $0.removeValue(forKey: storageKey(userId: userId, profileId: profileId))
                 }
+            },
+            loadStartupProfile: { userId in
+                profiles.value[userId]
+            },
+            saveStartupProfile: { profile, userId in
+                profiles.withValue { $0[userId] = profile }
             }
         )
     }

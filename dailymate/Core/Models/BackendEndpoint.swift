@@ -102,6 +102,39 @@ extension BackendEndpoint {
     return endpoint
   }
 
+  /// GET /api/weather?lat=<lat>&lon=<lon>
+  static func weather(
+    lat: Double,
+    lon: Double,
+    language: String = "vi"
+  ) -> Self {
+    var endpoint = Self.get(
+      "/api/weather",
+      queryItems: [
+        URLQueryItem(name: "lat", value: String(lat)),
+        URLQueryItem(name: "lon", value: String(lon)),
+      ],
+      requiresAuth: true,
+      timeoutInterval: 15
+    )
+    endpoint.language = language
+    return endpoint
+  }
+  /// POST /api/v1/suggest-ingredients?lang=<lang>
+  static func ingredientSuggest(
+    searchParam: SearchParamsDTO,
+    language: String = "vi"
+  ) throws -> Self {
+    var endpoint = try Self.post(
+      "/api/v1/suggest-ingredients",
+      body: searchParam,
+      queryItems: [URLQueryItem(name: "lang", value: language)],
+      requiresAuth: true,
+      timeoutInterval: 30
+    )
+    endpoint.language = language
+    return endpoint
+  }
   /// POST /api/v1/onboarding/taste-profile?lang=<lang>
   static func onboardingTasteProfile(
     _ body: TasteProfileRequestDTO,

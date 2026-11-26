@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import SwiftUI
+import Kingfisher
 
 struct Stage3DietAllergyView: View {
   @Bindable var store: StoreOf<Stage3DietAllergyFeature>
@@ -66,7 +67,7 @@ struct Stage3DietAllergyView: View {
       VStack(spacing: 12) {
         ForEach(DietType.allCases, id: \.self) { diet in
           OnboardingRadioRow(
-            emoji: diet.displayEmoji,
+            image: diet.displayEmoji,
             title: diet.displayTitle,
             subtitle: diet.displaySubtitle,
             isSelected: store.dietType == diet
@@ -391,7 +392,21 @@ private struct AllergyGroupSheetView: View {
               .foregroundStyle(.white)
           }
         }
-
+          
+          KFImage(item.imageUrl)
+                  .placeholder{RoundedRectangle(cornerRadius: 8,style : .continuous).fill(Color(hex: 0xEDE4D3)).overlay{Image(systemName: "leaf.fill").font(.caption).foregroundStyle(Color.Ghibli.inkMuted)}}
+                  .downsampling(size: CGSize(width : 72, height: 72))
+                    .cacheOriginalImage()
+                    .cancelOnDisappear(true)
+                    .fade(duration:0.15)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 36, height: 36)
+                    .clipShape(RoundedRectangle(cornerRadius: 8,style: .continuous))
+              
+                  
+          
+         
         Text(item.name)
           .font(.body)
           .foregroundStyle(Color.Ghibli.inkDark)
