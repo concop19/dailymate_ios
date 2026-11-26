@@ -135,6 +135,22 @@ extension BackendEndpoint {
     endpoint.language = language
     return endpoint
   }
+
+  /// POST /api/v1/recommend?lang=<lang>
+  static func recommend(
+    searchParam: SearchParamsDTO,
+    language: String = "vi"
+  ) throws -> Self {
+    var endpoint = try Self.post(
+      "/api/v1/recommend",
+      body: searchParam,
+      queryItems: [URLQueryItem(name: "lang", value: language)],
+      requiresAuth: true,
+      timeoutInterval: 30
+    )
+    endpoint.language = language
+    return endpoint
+  }
   /// POST /api/v1/onboarding/taste-profile?lang=<lang>
   static func onboardingTasteProfile(
     _ body: TasteProfileRequestDTO,

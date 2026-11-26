@@ -117,6 +117,7 @@ struct HomeFeature {
     @Reducer
     enum Path {
         case ingredientSuggest(IngredientSuggestFeature)
+        case dishList(DishListFeature)
     }
 
     @ObservableState
@@ -381,6 +382,10 @@ struct HomeFeature {
                 return .run { _ in
                     try? await authClient.signOut()
                 }
+
+            case let .path(.element(id: _, action: .ingredientSuggest(.delegate(.completed(params))))):
+                state.path.append(.dishList(DishListFeature.State(baseParams: params)))
+                return .none
 
             case .path:
                 return .none

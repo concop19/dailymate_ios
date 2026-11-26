@@ -122,6 +122,8 @@ struct HomeView: View {
             switch store.case {
             case let .ingredientSuggest(suggestStore):
                 IngredientSuggestView(store: suggestStore)
+            case let .dishList(dishListStore):
+                DishListView(store: dishListStore)
             }
         }
     }

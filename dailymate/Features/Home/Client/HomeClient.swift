@@ -10,9 +10,10 @@ import Foundation
 
 @DependencyClient
 public struct HomeClient: Sendable {
-    /// Gọi `GET /api/weather?lat=<lat>&lon=<lon>` và trả về toàn bộ chuỗi JSON (pretty-printed).
+    /// Gọi `GET /api/weather?lat=<lat>&lon=<lon>` và trả về `WeatherResponseDTO`.
     public var fetchWeatherRawJSON: @Sendable (_ lat: Double, _ lon: Double) async throws -> WeatherResponseDTO
-    public var getIngredientSuggest: @Sendable (_ searchParam: SearchParamsDTO)async throws -> SuggestIngredientsResponseDTO
+    public var getIngredientSuggest: @Sendable (_ searchParam: SearchParamsDTO) async throws -> SuggestIngredientsResponseDTO
+    public var recommendDishes: @Sendable (_ searchParam: SearchParamsDTO) async throws -> RecommendResponseDTO
 }
 
 extension HomeClient: DependencyKey {
@@ -27,6 +28,13 @@ extension HomeClient: DependencyKey {
                 let data = try await backend.request(
                     try .ingredientSuggest(searchParam: searchParams),
                     as: SuggestIngredientsResponseDTO.self
+                )
+                return data
+            },
+            recommendDishes: { searchParams in
+                let data = try await backend.request(
+                    try .recommend(searchParam: searchParams),
+                    as: RecommendResponseDTO.self
                 )
                 return data
             }
@@ -76,6 +84,40 @@ extension HomeClient: DependencyKey {
                             ]
                         )
                     ]
+                )
+            },
+            recommendDishes: { params in
+                RecommendResponseDTO(
+                    rankedDishes: [
+                        RankedDishDTO(
+                            dishId: "dish_1",
+                            rank: 1,
+                            finalScore: 0.92,
+                            matchPct: 92,
+                            title: "Thịt kho tiêu xanh",
+                            imageUrl: nil,
+                            nation: "vietnam",
+                            cookTimeMin: 30,
+                            estCostVnd: 65000,
+                            estCostLevel: 2
+                        ),
+                        RankedDishDTO(
+                            dishId: "dish_2",
+                            rank: 2,
+                            finalScore: 0.87,
+                            matchPct: 87,
+                            title: "Canh chua cá lóc",
+                            imageUrl: nil,
+                            nation: "vietnam",
+                            cookTimeMin: 25,
+                            estCostVnd: 55000,
+                            estCostLevel: 2
+                        )
+                    ],
+                    page: params.page ?? 1,
+                    totalPages: 2,
+                    hasNextPage: (params.page ?? 1) < 2,
+                    totalDishes: 12
                 )
             }
         )
