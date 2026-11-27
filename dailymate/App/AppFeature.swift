@@ -8,8 +8,9 @@ struct AppFeature {
     struct State: Equatable {
         var auth = AuthFeature.State()
         var home = HomeFeature.State()
-        /// Có giá trị khi hồ sơ cần onboarding → hiển thị `OnboardingView` thay cho Home.
+        /// Có giá trị khi hồ sơ cần onboarding (hoặc mở chỉnh sửa từ Home) → hiển thị `OnboardingView`.
         var onboarding: OnboardingFeature.State?
+        var currentUserId: UUID?
         /// Đang chờ sự kiện `initialSession` đầu tiên — hiển thị màn chờ để tránh nháy màn hình.
         var isCheckingSession = true
         var isAuthenticated = false
@@ -52,6 +53,7 @@ struct AppFeature {
 
             case let .authStateChanged(userId):
                 state.isCheckingSession = false
+                state.currentUserId = userId
                 let isAuthenticated = userId != nil
                 guard state.isAuthenticated != isAuthenticated else { return .none }
                 state.isAuthenticated = isAuthenticated
@@ -104,11 +106,32 @@ struct AppFeature {
                 }
                 return .none
 
+            case .home(.delegate(.editProfileRequested)):
+                guard let userId = state.currentUserId else { return .none }
+                let profile = state.home.profile ?? OnboardingMapper.defaultStartupProfile()
+                var draft = localClient.loadDraft(userId, profile.profileId) ?? OnboardingDraft()
+                if draft.gender == nil { draft.gender = profile.gender }
+                if draft.birthYear == nil { draft.birthYear = profile.birthYear }
+                draft.nation = profile.nation
+                draft.homeRegion = profile.homeRegion
+                draft.dietType = profile.dietType
+                state.onboarding = OnboardingFeature.State(
+                    userId: userId,
+                    profile: profile,
+                    draft: draft,
+                    allowCancel: true
+                )
+                return .none
+
             case let .onboarding(.delegate(.completed(profile))):
                 if let userId = state.onboarding?.userId {
                     localClient.saveStartupProfile(profile, userId)
                 }
                 state.home.profile = profile
+                state.onboarding = nil
+                return .none
+
+            case .onboarding(.delegate(.cancelled)):
                 state.onboarding = nil
                 return .none
 

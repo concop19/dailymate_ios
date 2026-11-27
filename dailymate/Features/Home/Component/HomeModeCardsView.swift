@@ -31,22 +31,24 @@ struct HomeModeCardsView: View {
                     .frame(maxWidth: .infinity, minHeight: 112)
                     .padding(.horizontal, 8)
                     .padding(.vertical, 12)
-                    .background(
-                        isSelected ? Color(hex: 0xFFFBF2) : Color(hex: 0xF7F2E7).opacity(0.95),
-                        in: cardShape
-                    )
-                    .overlay {
-                        cardShape.strokeBorder(
-                            isSelected ? Color.Ghibli.sky : Color.Ghibli.straw.opacity(0.75),
-                            lineWidth: isSelected ? 2.2 : 1.5
+                    // Không đổ nền: thẻ được chọn chỉ ánh nhẹ (lớp sáng mờ + viền xanh phát sáng).
+                    .background {
+                        cardShape.fill(
+                            LinearGradient(
+                                colors: [Color.white.opacity(isSelected ? 0.22 : 0), Color.white.opacity(0)],
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
                         )
                     }
-                    .shadow(
-                        color: (isSelected ? Color.Ghibli.sky : Color.Ghibli.wood).opacity(isSelected ? 0.18 : 0.08),
-                        radius: 8,
-                        x: 0,
-                        y: 4
-                    )
+                    .overlay {
+                        cardShape.strokeBorder(
+                            isSelected ? Color.Ghibli.sky : Color.clear,
+                            lineWidth: isSelected ? 2 : 1.5
+                        )
+                    }
+                    .shadow(color: Color.Ghibli.sky.opacity(isSelected ? 0.45 : 0), radius: isSelected ? 10 : 0)
+                    .animation(.easeInOut(duration: 0.25), value: isSelected)
                 }
                 .buttonStyle(.ghibliPress)
             }

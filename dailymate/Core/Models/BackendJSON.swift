@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Cấu hình `JSONEncoder` / `JSONDecoder` dùng chung cho toàn bộ request/response của BackendClient.
 enum BackendJSON {
   static let encoder: JSONEncoder = {
     let encoder = JSONEncoder()

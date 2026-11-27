@@ -32,9 +32,11 @@ struct OnboardingFeature {
     var stage1: Stage1PersonalFeature.State
     var path = StackState<Path.State>()
     var isCompleted = false
+    /// `true` khi mở từ Home để chỉnh sửa lại hồ sơ → cho phép bấm Back ở Stage 1 để huỷ về Home.
+    var allowCancel = false
 
     var currentStage: Int { path.count + 1 }
-    var canGoBack: Bool { !path.isEmpty }
+    var canGoBack: Bool { !path.isEmpty || allowCancel }
 
     /// Phụ đề thanh Hero (vd: `"Thẻ 1/8"` khi đang ở Stage 4).
     var heroDetail: String? {
@@ -42,10 +44,16 @@ struct OnboardingFeature {
       return stage4State.progressDetail
     }
 
-    init(userId: UUID, profile: UserProfile, draft: OnboardingDraft = OnboardingDraft()) {
+    init(
+      userId: UUID,
+      profile: UserProfile,
+      draft: OnboardingDraft = OnboardingDraft(),
+      allowCancel: Bool = false
+    ) {
       self.userId = userId
       self.profile = profile
       self.draft = draft
+      self.allowCancel = allowCancel
       self.stage1 = Stage1PersonalFeature.State(draft: draft)
     }
   }
@@ -59,6 +67,8 @@ struct OnboardingFeature {
     enum Delegate: Equatable {
       /// Hồ sơ đã lưu lên Supabase (đã có `profileId` thật).
       case completed(UserProfile)
+      /// Người dùng bấm quay lại ở Stage 1 khi mở từ Home để chỉnh sửa hồ sơ.
+      case cancelled
     }
   }
 
@@ -177,8 +187,13 @@ struct OnboardingFeature {
         return .none
 
       case .backButtonTapped:
-        guard !state.path.isEmpty else { return .none }
-        state.path.removeLast()
+        if !state.path.isEmpty {
+          state.path.removeLast()
+          return .none
+        }
+        if state.allowCancel {
+          return .send(.delegate(.cancelled))
+        }
         return .none
 
       case .delegate:

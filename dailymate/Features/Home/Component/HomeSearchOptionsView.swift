@@ -86,21 +86,23 @@ struct HomeSearchOptionsView: View {
                     .font(.subheadline)
                 Text(title)
                     .font(.subheadline.weight(.semibold))
-                    .foregroundStyle(isSelected ? .white : Color.Ghibli.inkDark)
+                    .foregroundStyle(Color.Ghibli.inkDark)
             }
             .padding(.horizontal, 14)
             .padding(.vertical, 9)
+            // Chưa chọn: trong suốt, lộ nền Home. Đã chọn: nền kem trắng.
             .background(
-                isSelected ? Color.Ghibli.wood : Color(hex: 0xFAF5EA).opacity(0.95),
+                isSelected ? Color(hex: 0xFAF5EA) : Color.clear,
                 in: Capsule()
             )
             .overlay {
-                if !isSelected {
-                    Capsule()
-                        .strokeBorder(Color.Ghibli.straw.opacity(0.85), lineWidth: 1.4)
-                }
+                Capsule()
+                    .strokeBorder(
+                        isSelected ? Color.Ghibli.wood.opacity(0.6) : Color.Ghibli.straw.opacity(0.85),
+                        lineWidth: isSelected ? 1.8 : 1.4
+                    )
             }
-            .shadow(color: Color.Ghibli.wood.opacity(isSelected ? 0.16 : 0.05), radius: 4, x: 0, y: 2)
+            .shadow(color: Color.Ghibli.wood.opacity(isSelected ? 0.14 : 0), radius: 4, x: 0, y: 2)
         }
         .buttonStyle(.ghibliPress)
     }

@@ -118,6 +118,8 @@ struct HomeFeature {
     enum Path {
         case ingredientSuggest(IngredientSuggestFeature)
         case dishList(DishListFeature)
+        case dishDetail(DishDetailFeature)
+        case cookingSteps(CookingStepsFeature)
     }
 
     @ObservableState
@@ -135,6 +137,8 @@ struct HomeFeature {
         var selectedCategory: DishCategory = .savory
         var selectedCookingMethods: Set<CookingMethod> = []
         var path = StackState<Path.State>()
+        /// Ngăn kéo bên phải "Món đã lưu" — chỉ hiện khi đang ở màn gốc của Home.
+        @Presents var savedDishes: SavedDishesFeature.State?
 
         var profileName: String {
             let trimmed = profile?.displayName.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
@@ -309,18 +313,28 @@ struct HomeFeature {
         case categorySelected(DishCategory)
         case cookingMethodToggled(CookingMethod)
         case profileSwitcherTapped
+        case editProfileTapped
         case signOutButtonTapped
         case findingButtonTapp
         case path(StackActionOf<Path>)
+        case savedDishes(PresentationAction<SavedDishesFeature.Action>)
+        case delegate(Delegate)
+
+        @CasePathable
+        enum Delegate: Equatable {
+            case editProfileRequested
+        }
     }
 
     @Dependency(\.authClient) var authClient
     @Dependency(\.homeClient) var homeClient
+    @Dependency(\.savedDishesClient) var savedDishesClient
 
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .onAppear:
+                presentSavedDishesIfNeeded(&state)
                 guard state.WeatherData == nil, !state.isLoading else { return .none }
                 return fetchWeather(&state)
 
@@ -377,6 +391,13 @@ struct HomeFeature {
             case .profileSwitcherTapped:
                 return .none
 
+            case .editProfileTapped:
+                state.savedDishes = nil
+                return .send(.delegate(.editProfileRequested))
+
+            case .delegate:
+                return .none
+
             case .signOutButtonTapped:
                 let authClient = self.authClient
                 return .run { _ in
@@ -387,11 +408,55 @@ struct HomeFeature {
                 state.path.append(.dishList(DishListFeature.State(baseParams: params)))
                 return .none
 
+            case let .path(.element(id: elementId, action: .dishList(.delegate(.dishSelected(dish))))):
+                var pickedIds: Set<Int> = []
+                if case let .dishList(dishListState) = state.path[id: elementId] {
+                    pickedIds = Set(dishListState.requestParams.marketBasket?.selectedIngredientIds ?? [])
+                }
+                state.path.append(
+                    .dishDetail(
+                        DishDetailFeature.State(
+                            dish: dish,
+                            pickedIngredientIds: pickedIds
+                        )
+                    )
+                )
+                return .none
+
+            case let .path(.element(id: _, action: .dishDetail(.delegate(.cookNow(dish, _))))):
+                state.path.append(.cookingSteps(CookingStepsFeature.State(dish: dish)))
+                return .none
+
+            case let .savedDishes(.presented(.delegate(.dishSelected(saved)))):
+                state.savedDishes = nil
+                state.path.append(.dishDetail(DishDetailFeature.State(dish: saved.rankedDish)))
+                return .none
+
+            case .savedDishes:
+                return .none
+
             case .path:
                 return .none
             }
         }
         .forEach(\.path, action: \.path)
+        .ifLet(\.$savedDishes, action: \.savedDishes) {
+            SavedDishesFeature()
+        }
+        Reduce { state, action in
+            // Ngăn kéo chỉ hiện ở màn gốc: ẩn khi push màn mới, hiện lại khi quay về.
+            if !state.path.isEmpty {
+                state.savedDishes = nil
+            } else if case .path = action {
+                presentSavedDishesIfNeeded(&state)
+            }
+            return .none
+        }
+    }
+
+    private func presentSavedDishesIfNeeded(_ state: inout State) {
+        guard state.path.isEmpty, state.savedDishes == nil else { return }
+        state.savedDishes = SavedDishesFeature.State(dishes: savedDishesClient.load())
     }
 
     private func fetchWeather(_ state: inout State) -> Effect<Action> {

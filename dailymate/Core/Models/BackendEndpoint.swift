@@ -166,4 +166,51 @@ extension BackendEndpoint {
     endpoint.language = language
     return endpoint
   }
+  /// GET /api/v1/dishes/<id>?lang=<lang>
+  static func dishDetail(
+    _ dishId: String,
+    language: String = "vi"
+  ) -> Self {
+    let cleanId = dishId.trimmingCharacters(in: .whitespacesAndNewlines)
+    var endpoint = Self.get(
+      "/api/v1/dishes/\(cleanId)",
+      queryItems: [URLQueryItem(name: "lang", value: language)],
+      requiresAuth: false,
+      timeoutInterval: 15
+    )
+    endpoint.language = language
+    return endpoint
+  }
+
+  /// GET /api/v1/dishes/<id>/cooking-steps?lang=<lang>
+  static func cookingSteps(
+    _ dishId: String,
+    language: String = "vi"
+  ) -> Self {
+    let cleanId = dishId.trimmingCharacters(in: .whitespacesAndNewlines)
+    var endpoint = Self.get(
+      "/api/v1/dishes/\(cleanId)/cooking-steps",
+      queryItems: [URLQueryItem(name: "lang", value: language)],
+      requiresAuth: true,
+      timeoutInterval: 15
+    )
+    endpoint.language = language
+    return endpoint
+  }
+
+  /// POST /api/v1/feedback?lang=<lang>
+  static func dishFeedback(
+    _ body: FeedbackRequestDTO,
+    language: String = "vi"
+  ) throws -> Self {
+    var endpoint = try Self.post(
+      "/api/v1/feedback",
+      body: body,
+      queryItems: [URLQueryItem(name: "lang", value: language)],
+      requiresAuth: true,
+      timeoutInterval: 15
+    )
+    endpoint.language = language
+    return endpoint
+  }
 }

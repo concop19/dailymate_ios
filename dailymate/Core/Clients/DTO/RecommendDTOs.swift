@@ -385,13 +385,22 @@ public struct RankedDishDTO: Equatable, Decodable, Identifiable, Sendable {
     public let matchPct: Double?
     public let title: String
     public let imageUrl: String?
+    public let url: String?
     public let nation: String?
     public let cookTimeMin: Int?
     public let estCostVnd: Double?
     public let estCostLevel: Int?
+    public let why: WhyDTO?
+    public let explanation: DishLegacyExplanationDTO?
+    public let missingIngredients: [String]
 
     public var imageURL: URL? {
         imageUrl.flatMap(URL.init(string:))
+    }
+
+    /// `match_pct` (server mới) hoặc `final_score * 100` (dữ liệu cũ).
+    public var resolvedMatchPct: Int {
+        Int((matchPct ?? ((finalScore ?? 0.0) * 100)).rounded())
     }
 
     public init(
@@ -401,10 +410,14 @@ public struct RankedDishDTO: Equatable, Decodable, Identifiable, Sendable {
         matchPct: Double? = nil,
         title: String = "",
         imageUrl: String? = nil,
+        url: String? = nil,
         nation: String? = nil,
         cookTimeMin: Int? = nil,
         estCostVnd: Double? = nil,
-        estCostLevel: Int? = nil
+        estCostLevel: Int? = nil,
+        why: WhyDTO? = nil,
+        explanation: DishLegacyExplanationDTO? = nil,
+        missingIngredients: [String] = []
     ) {
         self.dishId = dishId
         self.rank = rank
@@ -412,21 +425,46 @@ public struct RankedDishDTO: Equatable, Decodable, Identifiable, Sendable {
         self.matchPct = matchPct
         self.title = title
         self.imageUrl = imageUrl
+        self.url = url
         self.nation = nation
         self.cookTimeMin = cookTimeMin
         self.estCostVnd = estCostVnd
         self.estCostLevel = estCostLevel
+        self.why = why
+        self.explanation = explanation
+        self.missingIngredients = missingIngredients
+    }
+
+    /// Gộp đè dữ liệu chi tiết từ `GET /api/v1/dishes/{id}` lên món đang có.
+    public func merged(with detail: DishDetailDTO) -> RankedDishDTO {
+        RankedDishDTO(
+            dishId: dishId,
+            rank: rank,
+            finalScore: finalScore,
+            matchPct: matchPct,
+            title: detail.title.isEmpty ? title : detail.title,
+            imageUrl: detail.imageUrl.flatMap { $0.isEmpty ? nil : $0 } ?? imageUrl,
+            url: detail.url.flatMap { $0.isEmpty ? nil : $0 } ?? url,
+            nation: detail.nation.flatMap { $0.isEmpty ? nil : $0 } ?? nation,
+            cookTimeMin: detail.cookTimeMinutes ?? cookTimeMin,
+            estCostVnd: detail.estCostVnd ?? estCostVnd,
+            estCostLevel: detail.estCostLevel ?? estCostLevel,
+            why: why,
+            explanation: explanation,
+            missingIngredients: missingIngredients
+        )
     }
 
     enum CodingKeys: String, CodingKey {
-        case rank, title, nation
-        case dishId       = "dish_id"
-        case finalScore   = "final_score"
-        case matchPct     = "match_pct"
-        case imageUrl     = "image_url"
-        case cookTimeMin  = "cook_time_min"
-        case estCostVnd   = "est_cost_vnd"
-        case estCostLevel = "est_cost_level"
+        case rank, title, url, nation, why, explanation
+        case dishId             = "dish_id"
+        case finalScore         = "final_score"
+        case matchPct           = "match_pct"
+        case imageUrl           = "image_url"
+        case cookTimeMin        = "cook_time_min"
+        case estCostVnd         = "est_cost_vnd"
+        case estCostLevel       = "est_cost_level"
+        case missingIngredients = "missing_ingredients"
     }
 
     public init(from decoder: Decoder) throws {
@@ -443,9 +481,13 @@ public struct RankedDishDTO: Equatable, Decodable, Identifiable, Sendable {
         self.matchPct = try container.decodeIfPresent(Double.self, forKey: .matchPct)
         self.title = try container.decodeIfPresent(String.self, forKey: .title) ?? ""
         self.imageUrl = try container.decodeIfPresent(String.self, forKey: .imageUrl)
+        self.url = try container.decodeIfPresent(String.self, forKey: .url)
         self.nation = try container.decodeIfPresent(String.self, forKey: .nation)
         self.cookTimeMin = try container.decodeIfPresent(Int.self, forKey: .cookTimeMin)
         self.estCostVnd = try container.decodeIfPresent(Double.self, forKey: .estCostVnd)
         self.estCostLevel = try container.decodeIfPresent(Int.self, forKey: .estCostLevel)
+        self.why = try? container.decodeIfPresent(WhyDTO.self, forKey: .why)
+        self.explanation = try? container.decodeIfPresent(DishLegacyExplanationDTO.self, forKey: .explanation)
+        self.missingIngredients = (try? container.decodeIfPresent([String].self, forKey: .missingIngredients)) ?? []
     }
 }

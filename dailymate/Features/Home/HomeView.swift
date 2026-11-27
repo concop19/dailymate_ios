@@ -19,8 +19,10 @@ struct HomeView: View {
                 HomeHeaderView(
                     coordinatesText: store.coordinatesText,
                     dateText: shortVietnameseDate,
-                   
-                )
+                    profileName: store.profileName
+                ) {
+                    store.send(.editProfileTapped)
+                }
                 HomeWeatherHeroView(
                     weatherIcon: store.weatherIcon,
                     temperatureText: store.temperatureText,
@@ -118,12 +120,21 @@ struct HomeView: View {
         .onAppear {
             store.send(.onAppear)
         }
+        .overlay {
+            if let savedStore = store.scope(state: \.savedDishes, action: \.savedDishes.presented) {
+                SavedDishesSidePanel(store: savedStore)
+            }
+        }
         } destination: { store in
             switch store.case {
             case let .ingredientSuggest(suggestStore):
                 IngredientSuggestView(store: suggestStore)
             case let .dishList(dishListStore):
                 DishListView(store: dishListStore)
+            case let .dishDetail(dishDetailStore):
+                DishDetailView(store: dishDetailStore)
+            case let .cookingSteps(cookingStore):
+                CookingStepView(store: cookingStore)
             }
         }
     }
