@@ -86,18 +86,16 @@ extension SavedDishesClient: DependencyKey {
 
     public static var liveValue: Self {
         let lock = NSLock()
-        let defaults = UserDefaults.standard
-        let encoder = JSONEncoder()
-        let decoder = JSONDecoder()
 
+        // `UserDefaults` không Sendable nên lấy `.standard` bên trong thay vì capture.
         @Sendable func read() -> [SavedDish] {
-            guard let data = defaults.data(forKey: storageKey) else { return [] }
-            return (try? decoder.decode([SavedDish].self, from: data)) ?? []
+            guard let data = UserDefaults.standard.data(forKey: storageKey) else { return [] }
+            return (try? JSONDecoder().decode([SavedDish].self, from: data)) ?? []
         }
 
         @Sendable func write(_ dishes: [SavedDish]) {
-            guard let data = try? encoder.encode(dishes) else { return }
-            defaults.set(data, forKey: storageKey)
+            guard let data = try? JSONEncoder().encode(dishes) else { return }
+            UserDefaults.standard.set(data, forKey: storageKey)
         }
 
         return Self(
