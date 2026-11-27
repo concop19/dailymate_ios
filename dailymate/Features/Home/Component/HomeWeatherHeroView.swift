@@ -18,7 +18,7 @@ struct HomeWeatherHeroView: View {
     let isLoading: Bool
 
     var body: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 4) {
             // Mascot Lazy Cat + Icon thời tiết trong vòng tròn mờ
             HStack(spacing: 14) {
                 LottieView(animation: .named("Lazy cat"))

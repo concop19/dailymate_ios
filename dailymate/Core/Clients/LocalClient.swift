@@ -24,12 +24,17 @@ public struct LocalClient: Sendable {
     public var loadRecentDishIds: @Sendable () -> [String] = { [] }
     /// Lưu danh sách `recent_dish_ids` (tự cắt tối đa 3 phần tử mới nhất).
     public var saveRecentDishIds: @Sendable (_ dishIds: [String]) -> Void = { _ in }
+    /// Thời điểm người dùng từ chối (hoặc bấm "Để sau") quyền vị trí gần nhất. `nil` = chưa có / đã cho phép.
+    public var loadLocationDeniedAt: @Sendable () -> Date? = { nil }
+    /// Ghi / xoá (`nil`) thời điểm từ chối quyền vị trí.
+    public var saveLocationDeniedAt: @Sendable (_ date: Date?) -> Void = { _ in }
 }
 
 extension LocalClient: DependencyKey {
     private static let keyPrefix = "dailymate.onboarding.draft"
     private static let startupProfileKeyPrefix = "dailymate.startup.profile"
     private static let recentDishIdsKey = "dailymate.recommend.recentDishIds"
+    private static let locationDeniedAtKey = "dailymate.location.deniedAt"
 
     private static func startupProfileKey(userId: UUID) -> String {
         "\(startupProfileKeyPrefix).\(userId.uuidString.lowercased())"
@@ -89,6 +94,18 @@ extension LocalClient: DependencyKey {
                 let defaults = suiteName.flatMap(UserDefaults.init(suiteName:)) ?? .standard
                 let trimmed = Array(dishIds.prefix(3))
                 defaults.set(trimmed, forKey: recentDishIdsKey)
+            },
+            loadLocationDeniedAt: {
+                let defaults = suiteName.flatMap(UserDefaults.init(suiteName:)) ?? .standard
+                return defaults.object(forKey: locationDeniedAtKey) as? Date
+            },
+            saveLocationDeniedAt: { date in
+                let defaults = suiteName.flatMap(UserDefaults.init(suiteName:)) ?? .standard
+                if let date {
+                    defaults.set(date, forKey: locationDeniedAtKey)
+                } else {
+                    defaults.removeObject(forKey: locationDeniedAtKey)
+                }
             }
         )
     }
@@ -97,6 +114,7 @@ extension LocalClient: DependencyKey {
         let storage = LockIsolated<[String: OnboardingDraft]>([:])
         let profiles = LockIsolated<[UUID: UserProfile]>([:])
         let recentDishes = LockIsolated<[String]>([])
+        let locationDeniedAt = LockIsolated<Date?>(nil)
         return Self(
             loadDraft: { userId, profileId in
                 storage.value[storageKey(userId: userId, profileId: profileId)]
@@ -122,6 +140,12 @@ extension LocalClient: DependencyKey {
             },
             saveRecentDishIds: { dishIds in
                 recentDishes.setValue(Array(dishIds.prefix(3)))
+            },
+            loadLocationDeniedAt: {
+                locationDeniedAt.value
+            },
+            saveLocationDeniedAt: { date in
+                locationDeniedAt.setValue(date)
             }
         )
     }

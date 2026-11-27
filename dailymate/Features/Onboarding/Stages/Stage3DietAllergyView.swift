@@ -25,7 +25,7 @@ struct Stage3DietAllergyView: View {
     }
     .scrollIndicators(.hidden)
     .safeAreaInset(edge: .bottom) { continueBar }
-    .background { OnboardingBackground() }
+    .background { PaperBackground() }
     .toolbar(.hidden, for: .navigationBar)
     .sheet(
       item: Binding(
@@ -114,7 +114,7 @@ struct Stage3DietAllergyView: View {
       }
 
       if let error = store.allergyError {
-        OnboardingErrorText(error)
+        ErrorText(error)
       }
     }
   }
@@ -334,7 +334,7 @@ private struct AllergyGroupSheetView: View {
       } else if let loadError = sheet.loadError {
         VStack(spacing: 12) {
           Spacer()
-          OnboardingErrorText(loadError)
+          ErrorText(loadError)
           Button("Thử lại") {
             store.send(.retryLoadIngredientsTapped)
           }

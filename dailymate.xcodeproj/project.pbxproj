@@ -353,6 +353,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_DAILYMATE_BACKENDED_URL = "$(DAILYMATE_BACKENDED_URL)";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "DailyMate dùng vị trí để lấy thời tiết nơi bạn ở và gợi ý món ăn phù hợp.";
 				INFOPLIST_KEY_SUPABASE_PUBLISHABLE_KEY = "$(SUPABASE_PUBLISHABLE_KEY)";
 				INFOPLIST_KEY_SUPABASE_URL = "$(SUPABASE_URL)";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -386,6 +387,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_DAILYMATE_BACKENDED_URL = "$(DAILYMATE_BACKENDED_URL)";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "DailyMate dùng vị trí để lấy thời tiết nơi bạn ở và gợi ý món ăn phù hợp.";
 				INFOPLIST_KEY_SUPABASE_PUBLISHABLE_KEY = "$(SUPABASE_PUBLISHABLE_KEY)";
 				INFOPLIST_KEY_SUPABASE_URL = "$(SUPABASE_URL)";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

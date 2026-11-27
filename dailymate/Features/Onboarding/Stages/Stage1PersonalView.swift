@@ -29,7 +29,7 @@ struct Stage1PersonalView: View {
     .scrollIndicators(.hidden) // ẩn chỉ thanh cuộn
     .safeAreaInset(edge: .bottom) { continueBar }
       // fixed area dù cuônj thì thàn phần này vẫn ko bị cuon di
-    .background { OnboardingBackground() }
+    .background { PaperBackground() }
       // đặt background vstack này là onboardng backgroudn
     .toolbar(.hidden, for: .navigationBar)
       // ẩn thanh navigationBar mặc định của hệ thống
@@ -68,7 +68,7 @@ struct Stage1PersonalView: View {
       }
 
       if let error = store.genderError {
-        OnboardingErrorText(error)
+        ErrorText(error)
       }
     }
   }
@@ -134,7 +134,7 @@ struct Stage1PersonalView: View {
       }
 
       if let error = store.birthYearError {
-        OnboardingErrorText(error)
+        ErrorText(error)
       } else {
         Text("Từ \(store.minBirthYear) đến \(store.maxBirthYear)")
           .font(.caption)
@@ -203,30 +203,6 @@ struct OnboardingSectionLabel: View {
     Text(text)
       .font(.headline.weight(.bold))
       .foregroundStyle(Color.Ghibli.inkDark)
-  }
-}
-
-struct OnboardingErrorText: View {
-  let text: String
-  init(_ text: String) { self.text = text }
-
-  var body: some View {
-    Label(text, systemImage: "exclamationmark.circle.fill")
-      .font(.caption.weight(.semibold))
-      .foregroundStyle(Color.red.opacity(0.8))
-      .transition(.opacity)
-  }
-}
-
-/// Nền kem giấy cho toàn bộ luồng Onboarding.
-struct OnboardingBackground: View {
-  var body: some View {
-    BackgroundView(
-      texture: .paper,
-      baseColor: Color(hex: 0xF3EBDD),
-      overlayColor: .clear,
-      imageOpacity: 0.35
-    )
   }
 }
 

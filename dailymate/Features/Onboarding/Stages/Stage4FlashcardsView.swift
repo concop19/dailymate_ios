@@ -36,7 +36,7 @@ struct Stage4FlashcardsView: View {
     .padding(.bottom, 12)
     .frame(maxWidth: .infinity, maxHeight: .infinity)
    
-    .background { OnboardingBackground() }
+    .background { PaperBackground() }
     .toolbar(.hidden, for: .navigationBar)
     .onAppear {
       store.send(.onAppear)
@@ -73,7 +73,7 @@ struct Stage4FlashcardsView: View {
 
       if let error = store.errorMessage {
         VStack(spacing: 6) {
-          OnboardingErrorText(error)
+          ErrorText(error)
           Button("Thử gửi lại kết quả") {
             store.send(.retryComputeTasteTapped)
           }
@@ -116,7 +116,7 @@ struct Stage4FlashcardsView: View {
         animationName: "cat_calico",
         mascotSize: 84
       )
-      OnboardingErrorText(error)
+      ErrorText(error)
 
       GhibliPrimaryButton(title: "Thử lại", color: Color.Ghibli.wood) {
         store.send(.retryFetchCardsTapped)

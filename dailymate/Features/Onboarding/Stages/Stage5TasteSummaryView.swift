@@ -21,7 +21,7 @@ struct Stage5TasteSummaryView: View {
         summaryTagsRow
 
         if let error = store.errorMessage {
-          OnboardingErrorText(error)
+          ErrorText(error)
         }
       }
       .padding(.horizontal, 24)
@@ -30,7 +30,7 @@ struct Stage5TasteSummaryView: View {
     }
     .scrollIndicators(.hidden)
     .safeAreaInset(edge: .bottom) { finishBar }
-    .background { OnboardingBackground() }
+    .background { PaperBackground() }
     .toolbar(.hidden, for: .navigationBar)
   }
 

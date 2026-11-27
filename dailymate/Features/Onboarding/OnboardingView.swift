@@ -35,7 +35,7 @@ struct OnboardingView: View {
         }
       }
     }
-    .background { OnboardingBackground() }
+    .background { PaperBackground() }
   }
 }
 

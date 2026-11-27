@@ -15,7 +15,7 @@ struct HomeView: View {
     var body: some View {
         NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
             ScrollView {
-            VStack(spacing: 18) {
+            VStack(spacing: 10) {
                 HomeHeaderView(
                     coordinatesText: store.coordinatesText,
                     dateText: shortVietnameseDate,
@@ -32,11 +32,10 @@ struct HomeView: View {
                     seasonEmoji: store.seasonEmoji,
                     isLoading: store.isLoading
                 )
-                .padding(.top, 4)
 
                 if let error = store.errorMessage {
                     HStack(spacing: 10) {
-                        OnboardingErrorText(error)
+                        ErrorText(error)
                         Spacer()
                         Button("Thử lại") {
                             store.send(.reloadButtonTapped)
@@ -66,9 +65,7 @@ struct HomeView: View {
                     store.send(.toggleWeatherExpanded)
                 }
 
-                HomeModeCardsView(selectedMode: store.selectedMode) { mode in
-                    store.send(.modeSelected(mode))
-                }
+                HomeModeCardsView()
 
                 HomeSearchOptionsView(
                     selectedCategory: store.selectedCategory,
@@ -81,13 +78,13 @@ struct HomeView: View {
                     }
                 )
                 Button {
-                    store.send(.findingButtonTapp)
+                    store.send(.findButtonTapped)
                 } label: {
                     Text("\(store.selectedCategory.emoji)  Finding")
                         .font(.system(size: 17, weight: .bold, design: .rounded))
                         .foregroundStyle(.white)
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 16)
+                        .padding(.vertical, 13)
                         .background(Color.Ghibli.sky, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
                         .overlay {
                             RoundedRectangle(cornerRadius: 16, style: .continuous)
@@ -99,8 +96,8 @@ struct HomeView: View {
                 
             }
             .padding(.horizontal, 18)
-            .padding(.top, 8)
-            .padding(.bottom, 28)
+            .padding(.top, 4)
+            .padding(.bottom, 12)
         }
         .scrollIndicators(.hidden)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -120,6 +117,7 @@ struct HomeView: View {
         .onAppear {
             store.send(.onAppear)
         }
+        .alert($store.scope(state: \.alert, action: \.alert))
         .overlay {
             if let savedStore = store.scope(state: \.savedDishes, action: \.savedDishes.presented) {
                 SavedDishesSidePanel(store: savedStore)
@@ -146,7 +144,7 @@ struct HomeView: View {
             initialState: HomeFeature.State(
                 lat: 16.0600,
                 lon: 108.2100,
-                WeatherData: WeatherResponseDTO(
+                weatherData: WeatherResponseDTO(
                     aqi: 60,
                     cacheHit: false,
                     condition: "Có mây",
@@ -169,7 +167,6 @@ struct HomeView: View {
                     windSpeed: 1.8
                 ),
                 isWeatherExpanded: false,
-                selectedMode: .recommended,
                 selectedCategory: .savory
             )
         ) {
@@ -184,7 +181,7 @@ struct HomeView: View {
             initialState: HomeFeature.State(
                 lat: 16.0600,
                 lon: 108.2100,
-                WeatherData: WeatherResponseDTO(
+                weatherData: WeatherResponseDTO(
                     aqi: 60,
                     cacheHit: false,
                     condition: "Có mây",

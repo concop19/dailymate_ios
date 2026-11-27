@@ -23,7 +23,7 @@ struct HomeWeatherDetailsView: View {
     let onToggle: () -> Void
 
     var body: some View {
-        VStack(spacing: 14) {
+        VStack(spacing: 8) {
             Button(action: onToggle) {
                 HStack(spacing: 6) {
                     Text(isExpanded ? "Thu gọn" : "Độ ẩm, gió, không khí, UV")
@@ -32,7 +32,7 @@ struct HomeWeatherDetailsView: View {
                         .font(.caption.weight(.bold))
                 }
                 .foregroundStyle(Color.Ghibli.inkLabel)
-                .padding(.vertical, 6)
+                .padding(.vertical, 2)
             }
             .buttonStyle(.plain)
 

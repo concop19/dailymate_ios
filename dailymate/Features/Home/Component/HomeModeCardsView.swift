@@ -7,57 +7,42 @@
 
 import SwiftUI
 
+/// Hai nhãn chế độ gợi ý — chỉ để hiển thị, không bấm chọn.
+/// Hiện chỉ có "Gợi ý tùy chọn" hoạt động; "Từ tủ lạnh" chưa làm nên gắn nhãn "Sắp có".
 struct HomeModeCardsView: View {
-    let selectedMode: HomeFeature.SuggestionMode
-    let onSelect: (HomeFeature.SuggestionMode) -> Void
-
-    private let cardShape = RoundedRectangle(cornerRadius: 20, style: .continuous)
-
     var body: some View {
         HStack(spacing: 12) {
             ForEach(HomeFeature.SuggestionMode.allCases) { mode in
-                let isSelected = mode == selectedMode
-
-                Button {
-                    onSelect(mode)
-                } label: {
-                    VStack(spacing: 10) {
-                        MascotBanner(message: mode.title, animationName: mode.emoji, direction: .vertical,  mascotSize: 60,
-                                     bubleBackground: .clear,
-                                     showBorder: false)
-
-                       
+                MascotBanner(
+                    message: mode.title,
+                    animationName: mode.emoji,
+                    direction: .vertical,
+                    mascotSize: 60,
+                    bubleBackground: .clear,
+                    showBorder: false
+                )
+                .frame(maxWidth: .infinity, minHeight: 112)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 8)
+                .overlay(alignment: .topTrailing) {
+                    if mode == .fromFridge {
+                        Text("Sắp có")
+                            .font(.caption2.weight(.bold))
+                            .foregroundStyle(Color.Ghibli.wood)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 3)
+                            .background(Color.Ghibli.cream.opacity(0.95), in: Capsule())
+                            .overlay { Capsule().strokeBorder(Color.Ghibli.straw.opacity(0.6), lineWidth: 1) }
                     }
-                    .frame(maxWidth: .infinity, minHeight: 112)
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 12)
-                    // Không đổ nền: thẻ được chọn chỉ ánh nhẹ (lớp sáng mờ + viền xanh phát sáng).
-                    .background {
-                        cardShape.fill(
-                            LinearGradient(
-                                colors: [Color.white.opacity(isSelected ? 0.22 : 0), Color.white.opacity(0)],
-                                startPoint: .top,
-                                endPoint: .bottom
-                            )
-                        )
-                    }
-                    .overlay {
-                        cardShape.strokeBorder(
-                            isSelected ? Color.Ghibli.sky : Color.clear,
-                            lineWidth: isSelected ? 2 : 1.5
-                        )
-                    }
-                    .shadow(color: Color.Ghibli.sky.opacity(isSelected ? 0.45 : 0), radius: isSelected ? 10 : 0)
-                    .animation(.easeInOut(duration: 0.25), value: isSelected)
                 }
-                .buttonStyle(.ghibliPress)
+                .accessibilityElement(children: .combine)
             }
         }
     }
 }
 
 #Preview {
-    HomeModeCardsView(selectedMode: .recommended) { _ in }
+    HomeModeCardsView()
         .padding()
         .background(Color.Ghibli.cream)
 }

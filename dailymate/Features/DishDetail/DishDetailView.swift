@@ -50,7 +50,7 @@ struct DishDetailView: View {
         }
         .animation(.spring(response: 0.3, dampingFraction: 0.85), value: store.toastMessage)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background { OnboardingBackground() }
+        .background { PaperBackground() }
         .toolbar(.hidden, for: .navigationBar)
         .onAppear {
             store.send(.onAppear)
@@ -219,7 +219,7 @@ struct DishDetailView: View {
                 legacyExplanation: store.dish.explanation
             )
         case .info:
-            DishDetailIngredientInf(
+            DishDetailInfoView(
                 dish: store.dish,
                 detail: store.detail,
                 matchPct: store.matchPct

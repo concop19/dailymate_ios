@@ -27,7 +27,7 @@ struct Stage2RegionView: View {
     }
     .scrollIndicators(.hidden)
     .safeAreaInset(edge: .bottom) { continueBar }
-    .background { OnboardingBackground() }
+    .background { PaperBackground() }
     .toolbar(.hidden, for: .navigationBar)
   }
 
@@ -94,7 +94,7 @@ struct Stage2RegionView: View {
       }
 
       if let error = store.regionError {
-        OnboardingErrorText(error)
+        ErrorText(error)
       }
     }
   }

@@ -14,7 +14,7 @@ struct HomeSearchOptionsView: View {
     let onToggleCookingMethod: (HomeFeature.CookingMethod) -> Void
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 14) {
+        VStack(alignment: .leading, spacing: 10) {
             Text("TÙY CHỌN TÌM KIẾM")
                 .font(.caption.weight(.bold))
                 .tracking(0.8)
@@ -89,7 +89,7 @@ struct HomeSearchOptionsView: View {
                     .foregroundStyle(Color.Ghibli.inkDark)
             }
             .padding(.horizontal, 14)
-            .padding(.vertical, 9)
+            .padding(.vertical, 7)
             // Chưa chọn: trong suốt, lộ nền Home. Đã chọn: nền kem trắng.
             .background(
                 isSelected ? Color(hex: 0xFAF5EA) : Color.clear,

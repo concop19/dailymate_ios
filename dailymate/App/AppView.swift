@@ -7,7 +7,8 @@ struct AppView: View {
     var body: some View {
         ZStack {
             if store.isCheckingSession || (store.isAuthenticated && store.isLoadingProfile) {
-                LoadingView
+                AppLoadingView()
+                    .transition(.opacity)
             } else if store.isAuthenticated {
                 if let onboardingStore = store.scope(state: \.onboarding, action: \.onboarding) {
                     OnboardingView(store: onboardingStore)
@@ -33,20 +34,6 @@ struct AppView: View {
             .tint(Color.Ghibli.cream)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background { BackgroundView() }
-    }
-    
-    private var LoadingView: some View {
-        ZStack( alignment: .center){
-            Image("Image 1")
-                .resizable()
-            .scaledToFit()
-            .frame(width: 300, height: 500 )
-            MascotBanner(message: "               Để Dailymate nấu cho  \n                 bạn 1 món ngon nhé", animationName: "cat1" ,direction: .vertical )
-                .frame(width: 300)
-            
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-         .background { BackgroundView() }
     }
 }
 

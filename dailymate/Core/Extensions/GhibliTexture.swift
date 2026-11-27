@@ -8,7 +8,7 @@
 import SwiftUI
 import UIKit
 
-/// Các texture vẽ tay nằm trong `Resources/` (file .png rời, không thuộc Assets.xcassets).
+/// Các texture vẽ tay trong `Assets.xcassets` — tên imageset phải trùng `rawValue` (vd: `wood_light.imageset`).
 enum GhibliTexture: String {
   case wood = "wood_light"
   case paper = "paper_cream"
