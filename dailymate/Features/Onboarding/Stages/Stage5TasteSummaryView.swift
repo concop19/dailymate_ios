@@ -123,7 +123,7 @@ struct Stage5TasteSummaryView: View {
   // MARK: - Profile Summary Pills
 
   private var summaryTagsRow: some View {
-    OnboardingFlowLayout(horizontalSpacing: 8, verticalSpacing: 8) {
+    FlowLayout(horizontalSpacing: 8, verticalSpacing: 8) {
       summaryPill(
         emoji: store.regionSummaryEmoji,
         title: store.regionSummaryTitle,

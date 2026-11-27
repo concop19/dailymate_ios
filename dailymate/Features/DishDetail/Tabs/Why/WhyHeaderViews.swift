@@ -57,7 +57,7 @@ struct WhyLegacyCard: View {
                     .foregroundStyle(Color.Ghibli.inkDark)
 
                 if let tags = explanation.tags, !tags.isEmpty {
-                    OnboardingFlowLayout(horizontalSpacing: 6, verticalSpacing: 6) {
+                    FlowLayout(horizontalSpacing: 6, verticalSpacing: 6) {
                         ForEach(tags, id: \.self) { tag in
                             Text(tag)
                                 .font(.caption.weight(.semibold))

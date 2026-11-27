@@ -96,7 +96,7 @@ struct WhyShareBar: View {
                 }
                 .frame(height: 12)
 
-                OnboardingFlowLayout(horizontalSpacing: 12, verticalSpacing: 4) {
+                FlowLayout(horizontalSpacing: 12, verticalSpacing: 4) {
                     ForEach(groups) { group in
                         HStack(spacing: 4) {
                             Circle()

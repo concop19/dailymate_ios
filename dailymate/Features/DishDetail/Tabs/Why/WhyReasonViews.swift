@@ -24,7 +24,7 @@ struct WhyReasonList: View {
                             .foregroundStyle(Color.Ghibli.inkDark)
 
                         if !item.chips.isEmpty {
-                            OnboardingFlowLayout(horizontalSpacing: 6, verticalSpacing: 6) {
+                            FlowLayout(horizontalSpacing: 6, verticalSpacing: 6) {
                                 ForEach(item.chips, id: \.self) { chip in
                                     Text(chip)
                                         .font(.caption.weight(.medium))

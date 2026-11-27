@@ -73,7 +73,7 @@ struct DishDetailIngredientsView: View {
                             .font(.headline.weight(.bold))
                             .foregroundStyle(Color.Ghibli.inkDark)
 
-                        OnboardingFlowLayout(horizontalSpacing: 10, verticalSpacing: 10) {
+                        FlowLayout(horizontalSpacing: 10, verticalSpacing: 10) {
                             ForEach(mainIngredients) { ingredient in
                                 mainIngredientCard(ingredient, have: pickedIds.contains(ingredient.id))
                             }
@@ -86,7 +86,7 @@ struct DishDetailIngredientsView: View {
                             .foregroundStyle(Color.Ghibli.inkDark)
                             .padding(.top, mainIngredients.isEmpty ? 0 : 4)
 
-                        OnboardingFlowLayout(horizontalSpacing: 8, verticalSpacing: 8) {
+                        FlowLayout(horizontalSpacing: 8, verticalSpacing: 8) {
                             ForEach(sideIngredients) { ingredient in
                                 sideIngredientChip(ingredient, have: pickedIds.contains(ingredient.id))
                             }

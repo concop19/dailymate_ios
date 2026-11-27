@@ -92,7 +92,7 @@ struct Stage3DietAllergyView: View {
           .fixedSize(horizontal: false, vertical: true)
       }
 
-      OnboardingFlowLayout(horizontalSpacing: 10, verticalSpacing: 10) {
+      FlowLayout(horizontalSpacing: 10, verticalSpacing: 10) {
         AllergyChipButton(
           emoji: "✅",
           title: "Không dị ứng gì",

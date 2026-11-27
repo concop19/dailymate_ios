@@ -54,7 +54,7 @@ struct AllergyChipButton: View {
 }
 
 #Preview {
-  OnboardingFlowLayout(horizontalSpacing: 10, verticalSpacing: 10) {
+  FlowLayout(horizontalSpacing: 10, verticalSpacing: 10) {
     AllergyChipButton(emoji: "✅", title: "Không dị ứng gì", isSelected: true) {}
     AllergyChipButton(emoji: "🦐", title: "Hải sản", badge: "Tất cả", isSelected: true) {}
     AllergyChipButton(emoji: "🐟", title: "Cá", badge: "2", isSelected: true) {}

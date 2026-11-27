@@ -1,5 +1,5 @@
 //
-//  OnboardingFlowLayout.swift
+//  FlowLayout.swift
 //  dailymate
 //
 //  Created by ManhLe on 11/19/26.
@@ -8,7 +8,7 @@
 import SwiftUI
 
 /// Layout tự động xếp các chip theo hàng ngang và xuống dòng khi tràn chiều rộng.
-struct OnboardingFlowLayout: Layout {
+struct FlowLayout: Layout {
   var horizontalSpacing: CGFloat = 10
   var verticalSpacing: CGFloat = 10
 
